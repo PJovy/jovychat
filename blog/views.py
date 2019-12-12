@@ -1,23 +1,20 @@
 from django.shortcuts import render
 import datetime
 from .models import Article
+import markdown
 
 
 def home(request):
-    now = datetime.datetime.now()
     articles = Article.objects.all()
     context = {
-        'time': now,
         'articles': articles
     }
     return render(request, 'blog/home.html', context=context)
 
 
 def articles(request):
-    now = datetime.datetime.now()
     articles = Article.objects.all()
     context = {
-        'time': now,
         'articles': articles
     }
     return render(request, 'blog/articles.html', context=context)
@@ -42,6 +39,13 @@ def resume(request):
 def article_detail(request, article_id):
     article = Article.objects.get(id=article_id)
     now = datetime.datetime.now()
+    article.content = markdown.markdown(article.content,
+                                     extensions=[
+                                         # 包含 缩写、表格等常用扩展
+                                         'markdown.extensions.extra',
+                                         # 语法高亮扩展
+                                         'markdown.extensions.codehilite',
+                                     ])
     context = {
         'article': article,
         'time': now

@@ -14,6 +14,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .article-title {
     color: #181818;
+    text-align: center;
+}
+
+.article-pub-date {
+    text-align: end;
 }
 
 
