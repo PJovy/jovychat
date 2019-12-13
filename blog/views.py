@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 import datetime
 from .models import Article
 import markdown
+from .forms import ArticleForm
 
 
 def home(request):
@@ -51,3 +53,19 @@ def article_detail(request, article_id):
         'time': now
     }
     return render(request, 'blog/article_detail.html', context=context)
+
+
+def article_create(request):
+    if request.method == 'POST':
+        article_post_form = ArticleForm(data=request.POST)
+        if article_post_form.is_valid():
+            new_article = article_post_form.save()
+            return redirect('blog:articles')
+        else:
+            return HttpResponse("提交有误，请重新提交。")
+    else:
+        article_post_form = ArticleForm()
+        context = {
+            'article_post_form': article_post_form
+        }
+        return render(request, 'blog/article_create.html')
