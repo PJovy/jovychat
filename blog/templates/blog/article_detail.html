@@ -4,7 +4,8 @@
   </div>
   <div class="container">
   <h1 class="article-title">{{ article.title }}</h1>
-  <p class="article-pub-date"><small>{{ article.pub_date }}</small></p>
+      <p class="article-pub-date"><small>{{ article.pub_date }}</small></p>
+      <a href="{% url 'blog:article_delete' article_id=article.id %}">Delete</a>
   <p>{{ article.content|safe }}</p>
   </div>
 {% endblock %}

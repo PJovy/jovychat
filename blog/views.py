@@ -69,3 +69,10 @@ def article_create(request):
             'article_post_form': article_post_form
         }
         return render(request, 'blog/article_create.html')
+
+
+def article_delete(request, article_id):
+    article_to_delete = Article.objects.get(id=article_id)
+    article_to_delete.delete()
+    return redirect('blog:articles')
+
