@@ -5,7 +5,10 @@
     <div class="container">
         <h1 class="article-title">{{ article.title }}</h1>
         <p class="article-pub-date"><small>{{ article.pub_date }}</small></p>
-        <p class="article-pub-date"><a href="#" onclick="confirm_safe_delete()">·<small>删除文章</small></a></p>
+        <p class="article-pub-date">
+            <a href="#" onclick="confirm_safe_delete()">·<small>删除文章</small></a>
+            <a href="{% url "blog:article_update" article_id=article.id %}">·<small>编辑文章</small></a>
+        </p>
         <p>{{ article.content|safe }}</p>
         <form style="display:none;"
               id="safe_delete"

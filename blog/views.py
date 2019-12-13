@@ -76,3 +76,22 @@ def article_delete(request, article_id):
     article_to_delete.delete()
     return redirect('blog:articles')
 
+
+def article_update(request, article_id):
+    article_to_update = Article.objects.get(id=article_id)
+    if request.method == 'POST':
+        article_post_form = ArticleForm(data=request.POST)
+        if article_post_form.is_valid():
+            article_to_update.title = request.POST['title']
+            article_to_update.content = request.POST['content']
+            article_to_update.save()
+            return redirect('blog:article_detail', article_id=article_to_update.id)
+        else:
+            return HttpResponse("Update error.")
+    else:
+        article_post_form = ArticleForm()
+        context = {
+            'article': article_to_update,
+            'article_post_form': article_post_form
+        }
+        return render(request, 'blog/article_update.html', context=context)
