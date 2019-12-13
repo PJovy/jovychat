@@ -5,15 +5,20 @@
     <div class="container">
         <h1 class="article-title">{{ article.title }}</h1>
         <p class="article-pub-date"><small>{{ article.pub_date }}</small></p>
-        <div class="alert alert-success">
-            <a href="#" onclick="confirm_delete()">删除文章</a>
-        </div>
+        <p class="article-pub-date"><a href="#" onclick="confirm_safe_delete()">·<small>删除文章</small></a></p>
         <p>{{ article.content|safe }}</p>
+        <form style="display:none;"
+              id="safe_delete"
+              action="{% url 'blog:article_delete' article_id=article.id %}"
+              method="POST">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
     </div>
 
     <script>
         // 删除文章的函数
-        function confirm_delete() {
+        function confirm_safe_delete() {
             // 调用layer弹窗组件
             layer.open({
                 // 弹窗标题
@@ -23,7 +28,8 @@
                 // 点击确定按钮后调用的回调函数
                 yes: function (index, layero) {
                     // 指定应当前往的 url
-                    location.href = '{% url "blog:article_delete" article_id=article.id %}'
+                    $('form#safe_delete button').click();
+                    layer.close(index)
                 },
             })
         }
