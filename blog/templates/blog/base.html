@@ -26,7 +26,7 @@
                 <a class="nav-item nav-link" href="{% url 'blog:articles' %}">Articles</a>
                 <a class="nav-item nav-link" href="{% url 'blog:about' %}">About</a>
                 <a class="nav-item nav-link" href="{% url 'blog:resume' %}">Resume</a>
-                <a class="nav-item nav-link" href="{% url 'blog:article_create' %}">Post</a>
+
             </div>
         </div>
     </nav>
@@ -41,13 +41,21 @@
         </div>
         <div class="col-md-3">
             <div class="content-section">
-                <h3>Sidebar</h3>
-                <p class="text-muted">some info here.</p>
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-light">Latest articles</a>
-                    <a href="#" class="list-group-item list-group-item-light">Tags</a>
-                    <a href="#" class="list-group-item list-group-item-light">Calendars</a>
-                </div>
+                {% if user.is_authenticated %}
+                    <h4>{{ user.username }}</h4>
+                    <p class="text-muted">bios.</p>
+                    <div class="list-group">
+                        <a href="{% url 'userprofile:logout' %}" class="list-group-item list-group-item-light"><small>Logout</small></a>
+                        <a href="{% url 'blog:article_create' %}" class="list-group-item list-group-item-light"><small>Create
+                            New</small></a>
+                    </div>
+                {% else %}
+                    <h4>Anonymous</h4>
+                    <p class="text-muted">No comment.</p>
+                    <div class="list-group">
+                        <a href="{% url 'userprofile:login' %}" class="list-group-item list-group-item-light"><small>Login</small></a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

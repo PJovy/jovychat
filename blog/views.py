@@ -4,6 +4,7 @@ import datetime
 from .models import Article
 import markdown
 from .forms import ArticleForm
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def home(request):
@@ -31,11 +32,21 @@ def about(request):
 
 
 def resume(request):
-    now = datetime.datetime.now()
-    context = {
-        'time': now,
-    }
-    return render(request, 'blog/resume.html', context=context)
+    try:
+        article = Article.objects.get(title='Resume')
+        article.content = markdown.markdown(article.content,
+                                            extensions=[
+                                                # 包含 缩写、表格等常用扩展
+                                                'markdown.extensions.extra',
+                                                # 语法高亮扩展
+                                                'markdown.extensions.codehilite',
+                                            ])
+        context = {
+            'article': article
+        }
+        return render(request, 'blog/resume.html', context=context)
+    except ObjectDoesNotExist as e:
+        return HttpResponse(e)
 
 
 def article_detail(request, article_id):
