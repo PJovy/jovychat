@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserLoginForm, UserRegisterForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -48,3 +50,17 @@ def user_register(request):
         return render(request, 'userprofile/register.html', context)
     else:
         return HttpResponse('Please use POST or GET method.')
+
+
+@login_required(login_url='/userprofile/login')
+def user_delete(request, user_id):
+    if request.method == 'POST':
+        user = User.objects.get(id=user_id)
+        if request.user == user:
+            logout(request)
+            user.delete()
+            return redirect('blog:articles')
+        else:
+            return HttpResponse("You don't have the permission.")
+    else:
+        return HttpResponse("Only receive POST method.")

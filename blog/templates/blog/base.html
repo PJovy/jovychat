@@ -45,9 +45,15 @@
                     <h4>{{ user.username }}</h4>
                     <p class="text-muted">bios.</p>
                     <div class="list-group">
-                        <a href="{% url 'userprofile:logout' %}" class="list-group-item list-group-item-light"><small>Logout</small></a>
-                        <a href="{% url 'blog:article_create' %}" class="list-group-item list-group-item-light"><small>Create
-                            New</small></a>
+                        <a href="{% url 'userprofile:logout' %}" class="list-group-item list-group-item-light">
+                            <small>Logout</small>
+                        </a>
+                        <a href="{% url 'blog:article_create' %}" class="list-group-item list-group-item-light">
+                            <small>Create New</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-light" onclick="user_delete()">
+                            <small>Delete Acount</small>
+                        </a>
                     </div>
                 {% else %}
                     <h4>Anonymous</h4>
@@ -65,5 +71,29 @@
 <script src="{% static 'blog/js/popper.min.js' %}"></script>
 <script src="{% static 'blog/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'blog/layer/layer.js' %}"></script>
+
+{% if user.is_authenticated %}
+    <form
+            style="display: none"
+            action="{% url 'userprofile:delete' user_id=user.id%}"
+            id="user_delete"
+            method="POST">
+    {% csrf_token %}
+        <input type="submit" value="Send delete">
+    </form>
+    <script>
+        function user_delete() {
+            layer.open({
+                title: 'Confirm to delete',
+                content: 'Ensure to delete this user account?',
+                yes: function (index, layer) {
+                    $('form#user_delete input').click();
+                    layer.close(index);
+                },
+            })
+        }
+    </script>
+{% endif %}
+
 </body>
 </html>
