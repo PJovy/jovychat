@@ -17,12 +17,19 @@ def home(request):
 
 
 def articles(request):
-    article_list = Article.objects.all()
-    paginator = Paginator(article_list, 2)
+    if request.GET.get('order') == 'total_views':
+        article_list = Article.objects.all().order_by('-total_views')
+        order = 'total_views'
+    else:
+        article_list = Article.objects.all().order_by('-pub_date')
+        order = 'newest'
+
+    paginator = Paginator(article_list, 3)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
     context = {
-        'articles': articles
+        'articles': articles,
+        'order': order
     }
     return render(request, 'blog/articles.html', context=context)
 

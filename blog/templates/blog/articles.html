@@ -2,6 +2,17 @@
 
 {% block content %}
     <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% if order == 'newest' %}
+                    <li class="breadcrumb-item"><a href="{% url 'blog:articles' %}?order=total_views">Hot</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Newest</li>
+                {% else %}
+                    <li class="breadcrumb-item active" aria-current="page">Hot</li>
+                    <li class="breadcrumb-item"><a href="{% url 'blog:articles' %}?order=newest">Newest</a></li>
+                {% endif %}
+            </ol>
+        </nav>
     </div>
     <div class="container">
         {% for article in articles %}
