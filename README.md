@@ -8,3 +8,4 @@ This is a personal simple blog web app by Django.
 - User login/logout/Register/Delete
 - Markdown translate(not perfect now)
 - User password reset feature by import 3rd-party module 'django-password-reset'
+- Order articles by Hotest(most views) or Newest(recently published)
