@@ -18,7 +18,7 @@ def home(request):
 
 def articles(request):
     article_list = Article.objects.all()
-    paginator = Paginator(article_list, 1)
+    paginator = Paginator(article_list, 2)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
     context = {
@@ -56,6 +56,8 @@ def resume(request):
 def article_detail(request, article_id):
     article = Article.objects.get(id=article_id)
     now = datetime.datetime.now()
+    article.total_views += 1
+    article.save(update_fields=['total_views'])
     article.content = markdown.markdown(article.content,
                                      extensions=[
                                          # 包含 缩写、表格等常用扩展

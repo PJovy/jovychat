@@ -7,6 +7,7 @@ class Article(models.Model):
     title = models.CharField(max_length=50)
     pub_date = models.DateTimeField(default=timezone.now())
     content = models.TextField()
+    total_views = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = 'article'

@@ -11,7 +11,8 @@
                         <h5><a class="article-title"
                                href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}</a></h5>
                         <p>
-                            <small class="text-muted">{{ article.pub_date }}</small>
+                            <small class="text-muted" style="color:gray;">Views:{{ article.total_views }}</small>
+                            <small class="text-muted"> {{ article.pub_date }}</small>
                         </p>
                     </div>
                 </div>
