@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JovyChat</title>
+    {% block css %}
+        <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'blog/main.css' %}">
+        <link rel="stylesheet" href="{% static 'blog/md_css/monokai.css' %}">
+    {% endblock %}
+
+</head>
+<body>
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#">JovyChat</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{% url 'blog:home' %}">Home</a>
+                <a class="nav-item nav-link" href="{% url 'blog:articles' %}">Articles</a>
+                <a class="nav-item nav-link" href="{% url 'blog:about' %}">About</a>
+                <a class="nav-item nav-link" href="{% url 'blog:resume' %}">Resume</a>
+
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-md-9">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="col-md-3">
+            <div class="content-section">
+                {% if user.is_authenticated %}
+                    <h4>{{ user.username }}</h4>
+                    <p class="text-muted">bios.</p>
+                    <div class="list-group">
+                        <a href="{% url 'userprofile:logout' %}" class="list-group-item list-group-item-light">
+                            <small>Logout</small>
+                        </a>
+                        <a href="{% url 'blog:article_create' %}" class="list-group-item list-group-item-light">
+                            <small>Create New</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-light" onclick="user_delete()">
+                            <small>Delete Acount</small>
+                        </a>
+                    </div>
+                {% else %}
+                    <h4>Anonymous</h4>
+                    <p class="text-muted">No comment.</p>
+                    <div class="list-group">
+                        <a href="{% url 'userprofile:login' %}" class="list-group-item list-group-item-light"><small>Login</small></a>
+                        <a href="{% url 'userprofile:register' %}" class="list-group-item list-group-item-light"><small>Register</small></a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+<script src="{% static 'blog/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'blog/js/popper.min.js' %}"></script>
+<script src="{% static 'blog/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'blog/layer/layer.js' %}"></script>
+
+{% if user.is_authenticated %}
+    <form
+            style="display: none"
+            action="{% url 'userprofile:delete' user_id=user.id%}"
+            id="user_delete"
+            method="POST">
+    {% csrf_token %}
+        <input type="submit" value="Send delete">
+    </form>
+    <script>
+        function user_delete() {
+            layer.open({
+                title: 'Confirm to delete',
+                content: 'Ensure to delete this user account?',
+                yes: function (index, layer) {
+                    $('form#user_delete input').click();
+                    layer.close(index);
+                },
+            })
+        }
+    </script>
+{% endif %}
+
+</body>
+</html>

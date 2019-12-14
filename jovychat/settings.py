@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'userprofile.apps.UserprofileConfig',
+    'password_reset',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Email account settings
+# For reset password
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+# 邮箱名
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# 邮箱密码
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# 发送邮件的端口
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+# 是否使用 TLS
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+# 默认的发件人
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_FROM_EMAIL')

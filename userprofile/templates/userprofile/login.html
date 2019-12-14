@@ -11,6 +11,8 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" name="password" placeholder="Password">
             <a href="{% url 'userprofile:register' %}"><small>Do not have an account? Register now.</small></a>
+            <a href="{% url 'password_reset_recover' %}"><small>Forget password? Reset now.</small></a>
+
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
