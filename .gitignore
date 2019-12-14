@@ -1,1 +1,4 @@
-*.sqlite3
+# Created by .ignore support plugin (hsz.mobi)
+db.sqlite3
+/venv1
+/.idea
