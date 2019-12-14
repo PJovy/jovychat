@@ -5,6 +5,7 @@ from .models import Article
 import markdown
 from .forms import ArticleForm
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 
 
 def home(request):
@@ -16,7 +17,10 @@ def home(request):
 
 
 def articles(request):
-    articles = Article.objects.all()
+    article_list = Article.objects.all()
+    paginator = Paginator(article_list, 1)
+    page = request.GET.get('page')
+    articles = paginator.get_page(page)
     context = {
         'articles': articles
     }
