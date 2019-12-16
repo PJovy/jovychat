@@ -1,4 +1,15 @@
 {% extends 'blog/base.html' %}
+
+{% block table %}
+    <div class="content-section">
+        <h6><strong>Table of Contents</strong></h6>
+        <hr>
+        <div>
+            {{ toc|safe }}
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
     <div class="container-fluid">
     </div>

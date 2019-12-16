@@ -11,3 +11,4 @@ This is a personal simple blog web app by Django.
 - Simple counting views of article
 - Order articles by Hotest(most views) or Newest(recently published)
 - Simple search articles by input key word.
+- Auto generate table of Contents by markdown module(TOC)

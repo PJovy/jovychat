@@ -87,16 +87,20 @@ def article_detail(request, article_id):
     now = datetime.datetime.now()
     article.total_views += 1
     article.save(update_fields=['total_views'])
-    article.content = markdown.markdown(article.content,
-                                     extensions=[
-                                         # 包含 缩写、表格等常用扩展
-                                         'markdown.extensions.extra',
-                                         # 语法高亮扩展
-                                         'markdown.extensions.codehilite',
-                                     ])
+    md = markdown.Markdown(
+        extensions=[
+            # 包含 缩写、表格等常用扩展
+            'markdown.extensions.extra',
+            # 语法高亮扩展
+            'markdown.extensions.codehilite',
+            # 目录拓展 Table of Contents
+            'markdown.extensions.toc'
+        ])
+    article.content = md.convert(article.content)
+    toc = md.toc
     context = {
         'article': article,
-        'time': now
+        'toc': toc,
     }
     return render(request, 'blog/article_detail.html', context=context)
 
