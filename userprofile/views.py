@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserLoginForm, UserRegisterForm
 from django.contrib.auth.decorators import login_required
@@ -11,18 +11,22 @@ def user_login(request):
     if request.method == 'POST':
         user_login_form = UserLoginForm(data=request.POST)
         if user_login_form.is_valid():
+            next = request.POST.get('next', '')
             data = user_login_form.cleaned_data
             user = authenticate(username=data['username'], password=data['password'])
             if user:
                 login(request, user)
+                if next:
+                    return HttpResponseRedirect(next)
                 return redirect('blog:articles')
             else:
                 return HttpResponse('You made a mistake about login info, please input again.')
         else:
             return HttpResponse('Username or password is invalid.')
     elif request.method == 'GET':
+        next = request.GET.get('next', '')
         user_login_form = UserLoginForm()
-        context = {'form': user_login_form}
+        context = {'form': user_login_form, 'next': next}
         return render(request, 'userprofile/login.html', context)
     else:
         return HttpResponse('Please use GET or POST to request.')
