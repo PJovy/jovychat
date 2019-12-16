@@ -5,7 +5,7 @@ from django.utils import timezone
 class Article(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
-    pub_date = models.DateTimeField(default=timezone.now())
+    pub_date = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     total_views = models.PositiveIntegerField(default=0)
 

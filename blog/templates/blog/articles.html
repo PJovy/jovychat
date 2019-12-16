@@ -2,42 +2,71 @@
 
 {% block content %}
     <div class="container">
+        <!-- add breadcrumb navibar -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                {% if order == 'newest' %}
-                    <li class="breadcrumb-item"><a href="{% url 'blog:articles' %}?order=total_views">Hot</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Newest</li>
-                {% else %}
-                    <li class="breadcrumb-item active" aria-current="page">Hot</li>
-                    <li class="breadcrumb-item"><a href="{% url 'blog:articles' %}?order=newest">Newest</a></li>
-                {% endif %}
+                <li class="breadcrumb-item">
+                    <a href="{% url 'blog:articles' %}?order=total_views&search={{ search }}">Hotest</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'blog:articles' %}?search={{ search }}">Newest</a>
+                </li>
             </ol>
         </nav>
-                <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            {% if articles.has_previous %}
-                <li class="page-item"><a href="?page=1" class="btn btn-info">
-                    &laquo;1
-                </a>
+        <!-- add search bar -->
+        <div class="col-auto pl-0 mr-auto">
+            <form class="form-inline">
+                <label class="sr-only">
+                    Content:
+                </label>
+                <input type="text" class="form-control mb-2 mr-sm-2" name="search" placeholder="search posts..."
+                       required>
+            </form>
+        </div>
+
+        <!-- add pagination -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if articles.has_previous %}
+                    <li class="page-item"><a href="?page=1&order={{ order }}&search={{ search }}"
+                                             class="btn btn-secondary btn-sm">
+                        &laquo;
+                    </a>
+                    </li>
+                    <span>...</span>
+                    <li class="page-item"><a class="page-link"
+                                             href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}"> {{ articles.previous_page_number }} </a>
+                    </li>
+                {% endif %}
+                <li class="page-item disabled"><a class="page-link"
+                                                  href="?page{{ articles.number }}&order={{ order }}&search={{ search }}">{{ articles.number }}</a>
                 </li>
-                <span>...</span>
-                <li class="page-item"><a class="page-link"
-                                         href="?page={{ articles.previous_page_number }}"> {{ articles.previous_page_number }} </a>
-                </li>
-            {% endif %}
-            <li class="page-item"><a class="page-link" href="?page{{ articles.number }}">{{ articles.number }}</a></li>
-            {% if articles.has_next %}
-                <li class="page-item"><a class="page-link"
-                                         href="?page={{ articles.next_page_number }}"> {{ articles.next_page_number }} </a>
-                </li>
-                <span>...</span>
-                <li class="page-item"><a class="btn btn-info" href="?page={{ articles.paginator.num_pages }}">
-                    &raquo;{{ articles.paginator.num_pages }} </a></li>
-            {% endif %}
-        </ul>
-    </nav>
+                {% if articles.has_next %}
+                    <li class="page-item"><a class="page-link"
+                                             href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}"> {{ articles.next_page_number }} </a>
+                    </li>
+                    <span>...</span>
+                    <li class="page-item"><a class="btn btn-secondary btn-sm"
+                                             href="?page={{ articles.paginator.num_pages }}&order={{ order }}&search={{ search }}">
+                        &raquo; </a></li>
+                {% endif %}
+            </ul>
+        </nav>
 
     </div>
+
+    <!-- add hint for search results -->
+    {% if search %}
+        {% if articles %}
+            <h4>Results about <span style="color:red">{{ search }}</span> are here:</h4>
+            <hr>
+        {% else %}
+            <h4>No results about <span style="color:red">{{ search }}</span> now</h4>
+            <hr>
+        {% endif %}
+    {% endif %}
+
+    <!-- article list -->
     <div class="container">
         {% for article in articles %}
             <article class="media content-section">

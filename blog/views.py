@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 import datetime
@@ -17,19 +18,40 @@ def home(request):
 
 
 def articles(request):
-    if request.GET.get('order') == 'total_views':
-        article_list = Article.objects.all().order_by('-total_views')
-        order = 'total_views'
+    search = request.GET.get('search')
+    order = request.GET.get('order')
+    if search:
+        if order == 'total_views':
+            article_list = Article.objects.filter(
+                Q(title__icontains=search) |
+                Q(content__icontains=search)
+            ).order_by('-total_views')
+        else:
+            article_list = Article.objects.filter(
+                Q(title__icontains=search) |
+                Q(content__icontains=search)
+            )
     else:
-        article_list = Article.objects.all().order_by('-pub_date')
-        order = 'newest'
+        search = ''
+        if order == 'total_views':
+            article_list = Article.objects.all().order_by('-total_views')
+        else:
+            article_list = Article.objects.all().order_by('-pub_date')
+
+    # if request.GET.get('order') == 'total_views':
+    #     article_list = Article.objects.all().order_by('-total_views')
+    #     order = 'total_views'
+    # else:
+    #     article_list = Article.objects.all().order_by('-pub_date')
+    #     order = 'newest'
 
     paginator = Paginator(article_list, 3)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
     context = {
         'articles': articles,
-        'order': order
+        'order': order,
+        'search': search
     }
     return render(request, 'blog/articles.html', context=context)
 
