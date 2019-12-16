@@ -20,8 +20,12 @@
             <small>{{ article.pub_date }}</small>
         </p>
         <p class="article-pub-date">
+            {% if user.is_authenticated %}
             <a href="#" onclick="confirm_safe_delete()">·<small>删除文章</small></a>
             <a href="{% url "blog:article_update" article_id=article.id %}">·<small>编辑文章</small></a>
+            {% else %}
+
+            {% endif %}
         </p>
         <p>{{ article.content|safe }}</p>
         <form style="display:none;"

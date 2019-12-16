@@ -7,6 +7,7 @@ import markdown
 from .forms import ArticleForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -37,13 +38,6 @@ def articles(request):
             article_list = Article.objects.all().order_by('-total_views')
         else:
             article_list = Article.objects.all().order_by('-pub_date')
-
-    # if request.GET.get('order') == 'total_views':
-    #     article_list = Article.objects.all().order_by('-total_views')
-    #     order = 'total_views'
-    # else:
-    #     article_list = Article.objects.all().order_by('-pub_date')
-    #     order = 'newest'
 
     paginator = Paginator(article_list, 3)
     page = request.GET.get('page')
@@ -105,6 +99,7 @@ def article_detail(request, article_id):
     return render(request, 'blog/article_detail.html', context=context)
 
 
+@login_required(login_url='userprofile:login')
 def article_create(request):
     if request.method == 'POST':
         article_post_form = ArticleForm(data=request.POST)
@@ -121,12 +116,14 @@ def article_create(request):
         return render(request, 'blog/article_create.html')
 
 
+@login_required(login_url='userprofile:login')
 def article_delete(request, article_id):
     article_to_delete = Article.objects.get(id=article_id)
     article_to_delete.delete()
     return redirect('blog:articles')
 
 
+@login_required(login_url='userprofile:login')
 def article_update(request, article_id):
     article_to_update = Article.objects.get(id=article_id)
     if request.method == 'POST':
