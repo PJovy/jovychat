@@ -17,6 +17,6 @@ This is a personal simple blog web app by Django.
 
 ## TO DO
 - [ ] Comments
-- [ ] Tags
+- [x] Tags
 - [ ] Rich text editor
 - [ ] Rebuild styles by Bulma.css
