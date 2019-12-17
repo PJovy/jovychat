@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{% static 'blog/main.css' %}">
         <link rel="stylesheet" href="{% static 'blog/md_css/monokai.css' %}">
         <link rel="stylesheet" href="{% static 'blog/bulma.css' %}">
+        <link rel="stylesheet" href="{% static 'blog/animate.css' %}">
     {% endblock %}
 
 </head>
@@ -78,10 +79,10 @@
 {% if user.is_authenticated %}
     <form
             style="display: none"
-            action="{% url 'userprofile:delete' user_id=user.id%}"
+            action="{% url 'userprofile:delete' user_id=user.id %}"
             id="user_delete"
             method="POST">
-    {% csrf_token %}
+        {% csrf_token %}
         <input type="submit" value="Send delete">
     </form>
     <script>

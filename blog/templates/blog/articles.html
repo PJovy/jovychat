@@ -96,4 +96,18 @@
         {% endfor %}
         <hr>
     </div>
+    <script>
+        var tiles = document.getElementsByClassName("is-parent");
+        for (var i = 0; i < tiles.length; i++) {
+            tiles[i].addEventListener('mouseover', function () {
+                this.className += " animated pulse";
+            });
+            tiles[i].addEventListener('mouseout', function () {
+                this.className = this.className.replace(" animated pulse", "");
+            });
+        }
+
+    </script>
+
+
 {% endblock %}

@@ -135,10 +135,11 @@ def article_update(request, article_id):
     if request.method == 'POST':
         article_post_form = ArticleForm(data=request.POST, instance=article_to_update)
         if article_post_form.is_valid():
-            article_post_form.save()
+            article_post_form.save(commit=False)
             if request.POST['section'] != 'none':
                 article_to_update.section = ArticleSection.objects.get(id=request.POST['section'])
             article_to_update.save()
+            article_post_form.save_m2m()
             return redirect('blog:article_detail', article_id=article_to_update.id)
         else:
             return HttpResponse("Update error.")
