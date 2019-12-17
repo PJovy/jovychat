@@ -72,18 +72,16 @@
     <!-- article list -->
     <div class="tile is-ancestor is-vertical">
         {% for article in articles %}
-            <div class="tile is-8 is-parent">
+            <div class="tile is-12 is-parent">
                 <div class="tile is-child box">
                     <a class="title is-info"
                        href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}
                     </a>
-                    <button class="button is-rounded is-link is-bordered is-light is-small">{{ article.section }}</button>
+                    <button class="button is-rounded is-primary is-bordered is-light is-small">{{ article.section }}</button>
                     <hr>
-                    <p class="has-text-black is-small">
+                    <p class="has-text-grey is-small">
                         <span>发布时间: {{ article.pub_date }}</span>
-                    </p>
-                    <p class="has-text-black is-small">
-                        <span>阅读量: {{ article.total_views }}</span>
+                        <span class="has-text-link has-text-right">阅读量: {{ article.total_views }}</span>
                     </p>
                 </div>
 

@@ -10,10 +10,13 @@ This is a personal simple blog web app by Django.
 - User password reset feature by import 3rd-party module 'django-password-reset'
 - Simple counting views of article
 - Order articles by Hotest(most views) or Newest(recently published)
-- Simple search articles by input key word.
+- Simple search articles by input key word(title, content, section)
 - Auto generate table of Contents by markdown module(TOC)
+
+
 
 ## TO DO
 - [ ] Comments
 - [ ] Tags
 - [ ] Rich text editor
+- [ ] Rebuild styles by Bulma.css
