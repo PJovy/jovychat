@@ -3,6 +3,6 @@ db.sqlite3
 /venv1
 /.idea
 __pycache__
-.directory
+./.directory
 */migrations/*
 # some dummy data

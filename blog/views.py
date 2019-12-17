@@ -21,6 +21,11 @@ def home(request):
 def articles(request):
     search = request.GET.get('search')
     order = request.GET.get('order')
+    tag = request.GET.get('tag')
+    section = request.GET.get('section')
+    # initial query set
+    article_list = Article.objects.all()
+
     if search:
         if order == 'total_views':
             article_list = Article.objects.filter(
@@ -39,6 +44,14 @@ def articles(request):
         else:
             article_list = Article.objects.all().order_by('-pub_date')
 
+    # tag query:
+    if tag and tag != 'None':
+        article_list = article_list.filter(tags__name__in=[tag])
+
+    # section query:
+    if section is not None and section.isdigit():
+        article_list = article_list.filter(section=section)
+
     paginator = Paginator(article_list, 4)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
@@ -46,6 +59,7 @@ def articles(request):
         'articles': articles,
         'order': order,
         'search': search,
+        'tag': tag,
     }
     return render(request, 'blog/articles.html', context=context)
 

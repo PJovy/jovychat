@@ -31,26 +31,26 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     {% if articles.has_previous %}
-                        <li class="page-item"><a href="?page=1&order={{ order }}&search={{ search }}"
+                        <li class="page-item"><a href="?page=1&order={{ order }}&search={{ search }}&tag={{ tag }}"
                                                  class="btn btn-secondary btn-sm">
                             &laquo;
                         </a>
                         </li>
                         <span>...</span>
                         <li class="page-item"><a class="page-link"
-                                                 href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}"> {{ articles.previous_page_number }} </a>
+                                                 href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}&tag={{ tag }}"> {{ articles.previous_page_number }} </a>
                         </li>
                     {% endif %}
                     <li class="page-item disabled"><a class="page-link"
-                                                      href="?page{{ articles.number }}&order={{ order }}&search={{ search }}">{{ articles.number }}</a>
+                                                      href="?page{{ articles.number }}&order={{ order }}&search={{ search }}&tag={{ tag }}">{{ articles.number }}</a>
                     </li>
                     {% if articles.has_next %}
                         <li class="page-item"><a class="page-link"
-                                                 href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}"> {{ articles.next_page_number }} </a>
+                                                 href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}&tag={{ tag }}"> {{ articles.next_page_number }} </a>
                         </li>
                         <span>...</span>
                         <li class="page-item"><a class="btn btn-secondary btn-sm"
-                                                 href="?page={{ articles.paginator.num_pages }}&order={{ order }}&search={{ search }}">
+                                                 href="?page={{ articles.paginator.num_pages }}&order={{ order }}&search={{ search }}&tag={{ tag }}">
                             &raquo; </a></li>
                     {% endif %}
                 </ul>
@@ -74,19 +74,22 @@
     <!-- article list -->
     <div class="tile is-ancestor is-vertical">
         {% for article in articles %}
-            <div class="tile is-12 is-parent">
+            <div class="tile is-9 is-parent">
                 <div class="tile is-child box">
                     <p class="has-text-centered">
                         <a class="title is-info"
                            href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}
                         </a>
-                        <button class="button is-rounded is-primary is-bordered is-light">{{ article.section }}</button>
+                        <a class="button is-rounded is-primary is-bordered is-light"
+                            href="{% url 'blog:articles' %}?section={{ article.section.id }}">{{ article.section }}</a>
+                    <!-- tags here -->
                         {% for tag in article.tags.all %}
-                            <span class="tag is-rounded is-bordered is-light is-small">{{ tag }}</span>
+                            <a class="tag is-rounded is-bordered is-light is-small"
+                                href="{% url 'blog:articles' %}?tag={{ tag }}">{{ tag }}</a>
                         {% endfor %}
                     </p>
-                    <hr>
-                    <p class="has-text-grey has-text-right is-small">
+                    <br>
+                    <p class="has-text-grey has-text-right is-small is">
                         <span>发布时间: {{ article.pub_date }}</span>
                         <span class="has-text-link">阅读量: {{ article.total_views }}</span>
                     </p>
