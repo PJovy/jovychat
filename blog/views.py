@@ -39,13 +39,13 @@ def articles(request):
         else:
             article_list = Article.objects.all().order_by('-pub_date')
 
-    paginator = Paginator(article_list, 3)
+    paginator = Paginator(article_list, 4)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
     context = {
         'articles': articles,
         'order': order,
-        'search': search
+        'search': search,
     }
     return render(request, 'blog/articles.html', context=context)
 
@@ -108,6 +108,7 @@ def article_create(request):
             if request.POST['section'] != 'none':
                 new_article.section = ArticleSection.objects.get(id=request.POST['section'])
             new_article.save()
+            article_post_form.save_m2m()
             return redirect('blog:articles')
         else:
             return HttpResponse("提交有误，请重新提交。")
@@ -132,8 +133,9 @@ def article_delete(request, article_id):
 def article_update(request, article_id):
     article_to_update = Article.objects.get(id=article_id)
     if request.method == 'POST':
-        article_post_form = ArticleForm(data=request.POST)
+        article_post_form = ArticleForm(data=request.POST, instance=article_to_update)
         if article_post_form.is_valid():
+            article_post_form.save()
             if request.POST['section'] != 'none':
                 article_to_update.section = ArticleSection.objects.get(id=request.POST['section'])
             article_to_update.save()

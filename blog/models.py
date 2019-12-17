@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from taggit.managers import TaggableManager
 
 
 class ArticleSection(models.Model):
@@ -16,6 +17,7 @@ class Article(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     total_views = models.PositiveIntegerField(default=0)
+    tags = TaggableManager(blank=True)
     section = models.ForeignKey(
         ArticleSection,
         null=True,

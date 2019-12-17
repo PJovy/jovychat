@@ -27,34 +27,36 @@
         </div>
 
         <!-- add pagination -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                {% if articles.has_previous %}
-                    <li class="page-item"><a href="?page=1&order={{ order }}&search={{ search }}"
-                                             class="btn btn-secondary btn-sm">
-                        &laquo;
-                    </a>
+        <div class="container">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if articles.has_previous %}
+                        <li class="page-item"><a href="?page=1&order={{ order }}&search={{ search }}"
+                                                 class="btn btn-secondary btn-sm">
+                            &laquo;
+                        </a>
+                        </li>
+                        <span>...</span>
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}"> {{ articles.previous_page_number }} </a>
+                        </li>
+                    {% endif %}
+                    <li class="page-item disabled"><a class="page-link"
+                                                      href="?page{{ articles.number }}&order={{ order }}&search={{ search }}">{{ articles.number }}</a>
                     </li>
-                    <span>...</span>
-                    <li class="page-item"><a class="page-link"
-                                             href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}"> {{ articles.previous_page_number }} </a>
-                    </li>
-                {% endif %}
-                <li class="page-item disabled"><a class="page-link"
-                                                  href="?page{{ articles.number }}&order={{ order }}&search={{ search }}">{{ articles.number }}</a>
-                </li>
-                {% if articles.has_next %}
-                    <li class="page-item"><a class="page-link"
-                                             href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}"> {{ articles.next_page_number }} </a>
-                    </li>
-                    <span>...</span>
-                    <li class="page-item"><a class="btn btn-secondary btn-sm"
-                                             href="?page={{ articles.paginator.num_pages }}&order={{ order }}&search={{ search }}">
-                        &raquo; </a></li>
-                {% endif %}
-            </ul>
-        </nav>
+                    {% if articles.has_next %}
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}"> {{ articles.next_page_number }} </a>
+                        </li>
+                        <span>...</span>
+                        <li class="page-item"><a class="btn btn-secondary btn-sm"
+                                                 href="?page={{ articles.paginator.num_pages }}&order={{ order }}&search={{ search }}">
+                            &raquo; </a></li>
+                    {% endif %}
+                </ul>
+            </nav>
 
+        </div>
     </div>
 
     <!-- add hint for search results -->
@@ -74,35 +76,24 @@
         {% for article in articles %}
             <div class="tile is-12 is-parent">
                 <div class="tile is-child box">
-                    <a class="title is-info"
-                       href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}
-                    </a>
-                    <button class="button is-rounded is-primary is-bordered is-light is-small">{{ article.section }}</button>
+                    <p class="has-text-centered">
+                        <a class="title is-info"
+                           href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}
+                        </a>
+                        <button class="button is-rounded is-primary is-bordered is-light">{{ article.section }}</button>
+                        {% for tag in article.tags.all %}
+                            <span class="tag is-rounded is-bordered is-light is-small">{{ tag }}</span>
+                        {% endfor %}
+                    </p>
                     <hr>
-                    <p class="has-text-grey is-small">
+                    <p class="has-text-grey has-text-right is-small">
                         <span>发布时间: {{ article.pub_date }}</span>
-                        <span class="has-text-link has-text-right">阅读量: {{ article.total_views }}</span>
+                        <span class="has-text-link">阅读量: {{ article.total_views }}</span>
                     </p>
                 </div>
 
             </div>
         {% endfor %}
         <hr>
-        {#        <div class="container">#}
-        {#            {% for article in articles %}#}
-        {#                <article class="media content-section">#}
-        {#                    <div class="media-body col">#}
-        {#                        <div class="article-metadata">#}
-        {#                            <h5><a class="article-title"#}
-        {#                                   href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}</a>#}
-        {#                            </h5>#}
-        {#                            <p>#}
-        {#                                <small class="text-muted" style="color:gray;">Views:{{ article.total_views }}</small>#}
-        {#                                <small class="text-muted"> {{ article.pub_date }}</small>#}
-        {#                            </p>#}
-        {#                        </div>#}
-        {#                    </div>#}
-        {#                </article>#}
-        {#            {% endfor %}#}
     </div>
 {% endblock %}

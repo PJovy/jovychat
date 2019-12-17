@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'userprofile.apps.UserprofileConfig',
     'password_reset',
+    'taggit',
 ]
 
 MIDDLEWARE = [
