@@ -12,7 +12,7 @@ This is a personal simple blog web app by Django.
 - Order articles by Hotest(most views) or Newest(recently published)
 - Simple search articles by input key word(title, content, section)
 - Auto generate table of Contents by markdown module(TOC)
-
+- Search by tag name or article section.
 
 
 ## TO DO
