@@ -68,21 +68,43 @@
         {% endif %}
     {% endif %}
 
+    <hr>
     <!-- article list -->
-    <div class="container">
+    <div class="tile is-ancestor is-vertical">
         {% for article in articles %}
-            <article class="media content-section">
-                <div class="media-body col">
-                    <div class="article-metadata">
-                        <h5><a class="article-title"
-                               href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}</a></h5>
-                        <p>
-                            <small class="text-muted" style="color:gray;">Views:{{ article.total_views }}</small>
-                            <small class="text-muted"> {{ article.pub_date }}</small>
-                        </p>
-                    </div>
+            <div class="tile is-8 is-parent">
+                <div class="tile is-child box">
+                    <a class="title is-info"
+                       href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}
+                    </a>
+                    <button class="button is-rounded is-link is-bordered is-light is-small">{{ article.section }}</button>
+                    <hr>
+                    <p class="has-text-black is-small">
+                        <span>发布时间: {{ article.pub_date }}</span>
+                    </p>
+                    <p class="has-text-black is-small">
+                        <span>阅读量: {{ article.total_views }}</span>
+                    </p>
                 </div>
-            </article>
+
+            </div>
         {% endfor %}
+        <hr>
+        {#        <div class="container">#}
+        {#            {% for article in articles %}#}
+        {#                <article class="media content-section">#}
+        {#                    <div class="media-body col">#}
+        {#                        <div class="article-metadata">#}
+        {#                            <h5><a class="article-title"#}
+        {#                                   href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}</a>#}
+        {#                            </h5>#}
+        {#                            <p>#}
+        {#                                <small class="text-muted" style="color:gray;">Views:{{ article.total_views }}</small>#}
+        {#                                <small class="text-muted"> {{ article.pub_date }}</small>#}
+        {#                            </p>#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </article>#}
+        {#            {% endfor %}#}
     </div>
 {% endblock %}

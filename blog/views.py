@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 import datetime
-from .models import Article
+from .models import Article, ArticleSection
 import markdown
 from .forms import ArticleForm
 from django.core.exceptions import ObjectDoesNotExist
@@ -104,16 +104,21 @@ def article_create(request):
     if request.method == 'POST':
         article_post_form = ArticleForm(data=request.POST)
         if article_post_form.is_valid():
-            new_article = article_post_form.save()
+            new_article = article_post_form.save(commit=False)
+            if request.POST['section'] != 'none':
+                new_article.section = ArticleSection.objects.get(id=request.POST['section'])
+            new_article.save()
             return redirect('blog:articles')
         else:
             return HttpResponse("提交有误，请重新提交。")
     else:
         article_post_form = ArticleForm()
+        sections = ArticleSection.objects.all()
         context = {
-            'article_post_form': article_post_form
+            'article_post_form': article_post_form,
+            'sections': sections
         }
-        return render(request, 'blog/article_create.html')
+        return render(request, 'blog/article_create.html', context=context)
 
 
 @login_required(login_url='userprofile:login')
@@ -129,16 +134,16 @@ def article_update(request, article_id):
     if request.method == 'POST':
         article_post_form = ArticleForm(data=request.POST)
         if article_post_form.is_valid():
-            article_to_update.title = request.POST['title']
-            article_to_update.content = request.POST['content']
+            if request.POST['section'] != 'none':
+                article_to_update.section = ArticleSection.objects.get(id=request.POST['section'])
             article_to_update.save()
             return redirect('blog:article_detail', article_id=article_to_update.id)
         else:
             return HttpResponse("Update error.")
     else:
-        article_post_form = ArticleForm()
+        sections = ArticleSection.objects.all()
         context = {
             'article': article_to_update,
-            'article_post_form': article_post_form
+            'sections': sections
         }
         return render(request, 'blog/article_update.html', context=context)
