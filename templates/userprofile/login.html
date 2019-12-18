@@ -1,0 +1,52 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {#    <form action="{% url 'userprofile:login' %}" method="POST">#}
+    {#        {% csrf_token %}#}
+    {#        <div class="form-group">#}
+    {#            <label for="username">Username</label>#}
+    {#            <input type="text" class="form-control" name="username" placeholder="Enter username">#}
+    {#        </div>#}
+    {#        <div class="form-group">#}
+    {#            <label for="password">Password</label>#}
+    {#            <input type="password" class="form-control" name="password" placeholder="Password">#}
+    {#            <a href="{% url 'userprofile:register' %}"><small>Do not have an account? Register now.</small></a>#}
+    {#            <a href="{% url 'password_reset_recover' %}"><small>Forget password? Reset now.</small></a>#}
+    {##}
+    {#        </div>#}
+    {#        <input name="next" type="hidden" value="{{ next }}">#}
+    {#        <button type="submit" class="btn btn-primary">Submit</button>#}
+    {#    </form>#}
+
+    <form action="{% url 'userprofile:login' %}" method="POST">
+    {% csrf_token %}
+    <div class="field is-5">
+        <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" placeholder="用户名" name="username">
+            <span class="icon is-small is-left">
+      <i class="fas fa-envelope"></i>
+    </span>
+            <span class="icon is-small is-right">
+      <i class="fas fa-check"></i>
+    </span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="control has-icons-left">
+            <input class="input" type="password" placeholder="密码" name="password">
+            <span class="icon is-small is-left">
+      <i class="fas fa-lock"></i>
+    </span>
+        </p>
+    </div>
+    <div class="field">
+        <input name="next" type="hidden" value="{{ next }}">
+        <p class="control">
+            <button class="button is-success" type="submit">
+                Login
+            </button>
+        </p>
+    </div>
+    </form>
+
+{% endblock %}

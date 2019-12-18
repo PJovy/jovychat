@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <title>JovyChat</title>
     {% block css %}
-        <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'blog/main.css' %}">
-        <link rel="stylesheet" href="{% static 'blog/md_css/monokai.css' %}">
+        <link rel="stylesheet" href="{% static '../../static/blog/bootstrap/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static '../../static/blog/main.css' %}">
+        <link rel="stylesheet" href="{% static '../../static/blog/md_css/monokai.css' %}">
     {% endblock %}
 
 </head>
@@ -67,10 +67,10 @@
         </div>
     </div>
 </main>
-<script src="{% static 'blog/js/jquery-3.4.1.min.js' %}"></script>
-<script src="{% static 'blog/js/popper.min.js' %}"></script>
-<script src="{% static 'blog/bootstrap/bootstrap.min.js' %}"></script>
-<script src="{% static 'blog/layer/layer.js' %}"></script>
+<script src="{% static '../../static/blog/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static '../../static/blog/js/popper.min.js' %}"></script>
+<script src="{% static '../../static/blog/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static '../../static/blog/layer/layer.js' %}"></script>
 
 {% if user.is_authenticated %}
     <form

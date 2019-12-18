@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <form method="post" action="." enctype="multipart/form-data">
+    <form method="post" action="" enctype="multipart/form-data">
         <!-- Django中需要POST数据的地方都必须有csrf_token -->
         {% csrf_token %}
         <!-- 文章标题图 -->
