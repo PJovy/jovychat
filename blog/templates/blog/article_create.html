@@ -1,8 +1,17 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <form method="post" action=".">
+    <form method="post" action="." enctype="multipart/form-data">
         <!-- Django中需要POST数据的地方都必须有csrf_token -->
         {% csrf_token %}
+        <!-- 文章标题图 -->
+        <div class="form-group">
+            <!-- 标签 -->
+            <label for="avatar">文章标题图片</label>
+            <!-- 文本框 -->
+            <input type="file" class="form-control-file" id="avatar" name="avatar">
+        </div>
+
+
         <!-- 文章标题 -->
         <div class="form-group">
             <!-- 标签 -->

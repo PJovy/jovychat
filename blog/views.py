@@ -116,7 +116,7 @@ def article_detail(request, article_id):
 @login_required(login_url='userprofile:login')
 def article_create(request):
     if request.method == 'POST':
-        article_post_form = ArticleForm(data=request.POST)
+        article_post_form = ArticleForm(request.POST, request.FILES)
         if article_post_form.is_valid():
             new_article = article_post_form.save(commit=False)
             if request.POST['section'] != 'none':

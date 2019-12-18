@@ -122,9 +122,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
+# Media URL settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
 # Email account settings
 # For reset password
-
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 # 邮箱名
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')

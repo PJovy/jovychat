@@ -81,11 +81,11 @@
                            href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}
                         </a>
                         <a class="button is-rounded is-primary is-bordered is-light"
-                            href="{% url 'blog:articles' %}?section={{ article.section.id }}">{{ article.section }}</a>
-                    <!-- tags here -->
+                           href="{% url 'blog:articles' %}?section={{ article.section.id }}">{{ article.section }}</a>
+                        <!-- tags here -->
                         {% for tag in article.tags.all %}
                             <a class="tag is-rounded is-bordered is-light is-small"
-                                href="{% url 'blog:articles' %}?tag={{ tag }}">{{ tag }}</a>
+                               href="{% url 'blog:articles' %}?tag={{ tag }}">{{ tag }}</a>
                         {% endfor %}
                     </p>
                     <br>
@@ -93,8 +93,14 @@
                         <span>发布时间: {{ article.pub_date }}</span>
                         <span class="has-text-link">阅读量: {{ article.total_views }}</span>
                     </p>
-                </div>
-
+                    <!-- 标题图位置 -->
+                    {% if article.avatar %}
+                        <figure class="image">
+                            <img src="{{ article.avatar.url }}" alt="avatar"
+                                 >
+                        </figure>
+                        </div>
+                    {% endif %}
             </div>
         {% endfor %}
         <hr>
