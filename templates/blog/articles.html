@@ -41,8 +41,8 @@
                         <p class="subtitle has-text-info">尝试搜索:</p>
                         <div class="buttons">
                             {% for article in articles %}
-                                {% for tag in article.tags.all %}
-                                    <button class="button is-bold">{{ tag }}</button>
+                                {% for tag in article.tags.all|slice:":5" %}
+                                    <button class="button is-bold is-small">{{ tag }}</button>
                                 {% endfor %}
                             {% endfor %}
 
@@ -53,7 +53,7 @@
         </div>
         <!-- end search bar -->
 
-        <div class="column is-three-fifths ">
+        <div class="column is-three-fifths-desktop is-four-fifths-tablet">
             <div class="tile is-ancestor is-vertical">
                 <!-- article list -->
                 {% for article in articles %}
@@ -62,18 +62,14 @@
                             <article class="media">
                                 <div class="media-left">
 
-                                    <figure class="image is-256x256 is-rounded">
-                                        <img src="{{ article.avatar.url }}" alt="文章标题图">
+                                    <figure class="image is-128x128">
+                                        <img class="article-avatar" src="{{ article.avatar.url }}" alt="文章标题图">
                                     </figure>
 
                                     <div class="level">
                                         <a class="level-item">
                                             <span class="icon is-large"><i class="fas fa-reply"></i></span>
-                                        </a>
-                                        <a class="level-item">
                                             <span class="icon is-large"><i class="fas fa-retweet"></i></span>
-                                        </a>
-                                        <a class="level-item">
                                             <span class="icon is-large"><i class="fas fa-heart"></i></span>
                                         </a>
                                     </div>
@@ -81,6 +77,10 @@
                                 <div class="media-content">
                                     <div class="content has has-text-centered">
                                         <p class="is-spaced">
+                                            <a class="button is-warning article-section"
+                                               href="{% url 'blog:articles' %}?section={{ article.section.id }}">
+                                                {{ article.section }}
+                                            </a>
                                             <a class="title"
                                                href="{% url 'blog:article_detail' article_id=article.id %}">
                                                 {{ article.title }}
@@ -96,12 +96,12 @@
                                     <nav class="level">
                                         <div class="level-left">
                                             <!-- article section -->
-                                            <div class="level-item">
-                                                <a class="button is-warning is-radiusless"
-                                                   href="{% url 'blog:articles' %}?section={{ article.section.id }}">
-                                                    {{ article.section }}
-                                                </a>
-                                            </div>
+{#                                            <div class="level-item">#}
+{#                                                <a class="button is-warning is-radiusless"#}
+{#                                                   href="{% url 'blog:articles' %}?section={{ article.section.id }}">#}
+{#                                                    {{ article.section }}#}
+{#                                                </a>#}
+{#                                            </div>#}
                                             <!-- end article section -->
 
                                             <!-- tags here -->
@@ -117,7 +117,7 @@
 
                                     <div class="level-right">
                                         <p class="has-text-grey has-text-right is-small">
-                                            <span>发布时间: {{ article.pub_date }}</span>
+                                            <span>{{ article.pub_date|date:'Y-m-d' }}</span>
                                             <span class="has-text-link"><i
                                                     class="fa fa-eye has-text-info"></i> :{{ article.total_views }}</span>
                                         </p>

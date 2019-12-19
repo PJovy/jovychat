@@ -45,7 +45,7 @@
                                         <i class="fa fa-eye"></i>&nbsp;
                                         {{ article.total_views }}
                                     </span>
-                                        <span class="tag is-rounded">{{ article.pub_date }}</span>
+                                        <span class="tag is-rounded">{{ article.pub_date|date:'Y-m-d' }}</span>
                                         {% if user.is_authenticated %}
                                             <a class="tag is-rounded is-small is-danger" href="#"
                                                onclick="confirm_safe_delete()">·<small>删除文章</small></a>

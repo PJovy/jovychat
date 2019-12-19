@@ -5,56 +5,72 @@
         <div class="hero-head is-size-5">
             <nav class="navbar is-transparent">
                 <div class="container">
-                <div class="navbar-brand">
-                    <a class="navbar-item" href="{% url 'blog:home' %}">
-                        <i class="fas fa-home"></i>
-                    </a>
-                    <a class="navbar-burger burger" data-target="navbarPrimary" role="button"
-                       aria-label="menu" aria-expanded="false">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
-
-
-                <div id="navbarPrimary" class="navbar-menu">
-                    <!-- left side -->
-                    <div class="navbar-end">
+                    <div class="navbar-brand">
                         <a class="navbar-item" href="{% url 'blog:home' %}">
-                            主页
+                            <i class="fas fa-home"></i>
                         </a>
-                        <a class="navbar-item" href="{% url 'blog:articles' %}">
-                            文章
-                        </a>
-                        <a class="navbar-item" href="{% url 'blog:about' %}">
-                            关于
+                        <a class="navbar-burger burger" data-target="navbarPrimary" role="button"
+                           aria-label="menu" aria-expanded="false">
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
                         </a>
                     </div>
 
-                    <!-- right side -->
-{#                    <div class="navbar-end">#}
-{#                        <div class="navbar-item">#}
-{#                            <div class="field is-grouped">#}
-{#                                <p class="control">#}
-{#                                    <a class="button is-small is-light is-rounded"#}
-{#                                       href="{% url 'userprofile:login' %}">#}
-{#                                        <span class="icon"><i class="fa fa-user"></i></span>#}
-{#                                        <span>登录</span>#}
-{#                                    </a>#}
-{#                                </p>#}
-{#                                <p class="control">#}
-{#                                    <a class="button is-small is-light is-rounded"#}
-{#                                       href="{% url 'userprofile:register' %}">#}
-{#                                        <span class="icon"><i class="fa fa-registered"></i></span>#}
-{#                                        <span>注册</span>#}
-{##}
-{#                                    </a>#}
-{#                                </p>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-                </div>
+
+                    <div id="navbarPrimary" class="navbar-menu">
+                        <!-- left side -->
+                        <div class="navbar-end">
+                            <a class="navbar-item" href="{% url 'blog:home' %}">
+                                主页
+                            </a>
+                            <a class="navbar-item" href="{% url 'blog:articles' %}">
+                                文章
+                            </a>
+                            <a class="navbar-item" href="{% url 'blog:about' %}">
+                                关于
+                            </a>
+                        </div>
+
+                        <!-- right side -->
+                        <div class="navbar-end">
+                            <div class="navbar-item">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        {% if not user.is_authenticated %}
+                                            <a class="button is-small is-light is-rounded"
+                                               href="{% url 'userprofile:login' %}">
+                                                <span class="icon"><i class="fa fa-user"></i></span>
+                                                <span>登录</span>
+                                            </a>
+                                        {% else %}
+                                            <div class="dropdown is-hoverable">
+                                                <div class="dropdown-trigger">
+                                                    <button class="button is-rounded is-black" aria-haspopup="true"
+                                                            aria-controls="dropdown-menu">
+                                                        <span>{{ user.username }}</span>
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a href="{% url 'blog:article_create' %}" class="dropdown-item">
+                                                            创建文章
+                                                        </a>
+                                                        <a href="{% url 'userprofile:logout' %}" class="dropdown-item">
+                                                            退出登录
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -62,7 +78,7 @@
         <!-- hero body -->
         <div class="hero-body">
             <div class="container content has-text-centered">
-                <h1 class="title is-size-2 is-spaced has-text-white-bis">
+                <h1 class="title is-size-1 is-spaced has-text-white-bis">
                     JovyChat
                 </h1>
                 <h2 class="subtitle has-text-white-bis">
@@ -73,17 +89,17 @@
         <!-- end hero body -->
 
         <!-- hero footer -->
-{#        <div class="hero-foot">#}
-{#            <nav class="tabs is-centered">#}
-{#                <div class="container">#}
-{#                    <ul>#}
-{#                        <li class="is-active"><a>概览</a></li>#}
-{#                        <li><a>介绍</a></li>#}
-{#                        <li><a>技能树</a></li>#}
-{#                    </ul>#}
-{#                </div>#}
-{#            </nav>#}
-{#        </div>#}
+        {#        <div class="hero-foot">#}
+        {#            <nav class="tabs is-centered">#}
+        {#                <div class="container">#}
+        {#                    <ul>#}
+        {#                        <li class="is-active"><a>概览</a></li>#}
+        {#                        <li><a>介绍</a></li>#}
+        {#                        <li><a>技能树</a></li>#}
+        {#                    </ul>#}
+        {#                </div>#}
+        {#            </nav>#}
+        {#        </div>#}
         <!-- end hero footer -->
 
     </section>
