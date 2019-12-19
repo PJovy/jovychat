@@ -76,19 +76,10 @@ div.column.is-8:first-child {
 
 .article-body {
     line-height: 1.4;
-    margin: 0 3rem;
+    margin: 0 1rem;
 }
 
 .promo-block .container {
     margin: 1rem 5rem;
 }
 
-.toc {
-    line-height: 2;
-    margin: 5rem 0;
-    margin-bottom: 30px;
-}
-
-.toc a {
-    font-size: 1.2rem;
-}
