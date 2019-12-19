@@ -2,52 +2,47 @@
 
 {% block content %}
     <div class="columns is-centered">
-        <!-- articles -->
-        <div class="column is-four-fifths-desktop is-centered">
-            <div class="tile is-ancestor is-6">
-                <div class="tile is-vertical">
-                    {% for article in articles %}
-                        <div class="tile">
-                            <div class="box">
-                                <article class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-64x64">
-                                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <p class="title">{{ article.title }}</p>
-
-                                        </div>
-                                    </div>
-                                </article>
-
-                            </div>
-
+        <div class="column is-three-fifths">
+            <div class="tile is-ancestor is-vertical">
+                {% for article in articles %}
+                    <div class="tile is-9 is-parent is-vertical">
+                        <div class="tile is-child box">
+                            <p class="has-text-centered">
+                                <a class="title is-info"
+                                   href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}
+                                </a>
+                                <a class="button is-rounded is-primary is-bordered is-light"
+                                   href="{% url 'blog:articles' %}?section={{ article.section.id }}">{{ article.section }}</a>
+                                <!-- tags here -->
+                                {% for tag in article.tags.all %}
+                                    <a class="tag is-rounded is-link is-small"
+                                       href="{% url 'blog:articles' %}?tag={{ tag }}">{{ tag }}</a>
+                                {% endfor %}
+                            </p>
+                            <br>
+                            <p class="has-text-grey has-text-right is-small is">
+                                <span>发布时间: {{ article.pub_date }}</span>
+                                <span class="has-text-link">阅读量: {{ article.total_views }}</span>
+                            </p>
                         </div>
-                    {% endfor %}
-                </div>
+
+                    </div>
+                {% endfor %}
+                <hr>
             </div>
         </div>
     </div>
-
-
-
-
-
-    <!-- js:when move over these tiles,do pulse animation -->
-    <script>
-        var tiles = document.getElementsByClassName("is-child");
-        for (var i = 0; i < tiles.length; i++) {
-            tiles[i].addEventListener('mouseover', function () {
-                this.className += " animated pulse";
-            });
-            tiles[i].addEventListener('mouseout', function () {
-                this.className = this.className.replace(" animated pulse", "");
-            });
-        }
-    </script>
-
+        <!-- js:when move over these tiles,do pulse animation -->
+        <script>
+            var tiles = document.getElementsByClassName("is-child");
+            for (var i = 0; i < tiles.length; i++) {
+                tiles[i].addEventListener('mouseover', function () {
+                    this.className += " animated pulse";
+                });
+                tiles[i].addEventListener('mouseout', function () {
+                    this.className = this.className.replace(" animated pulse", "");
+                });
+            }
+        </script>
 
 {% endblock %}

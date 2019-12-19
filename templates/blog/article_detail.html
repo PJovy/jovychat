@@ -1,41 +1,76 @@
 {% extends 'blog/base.html' %}
 {% load static %}
-{#{% block table %}#}
-{#    <div class="content-section">#}
-{#        <h6><strong>Table of Contents</strong></h6>#}
-{#        <hr>#}
-{#        <div>#}
-{#            {{ toc|safe }}#}
-{#        </div>#}
-{#    </div>#}
-{#{% endblock %}#}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+{% endblock %}
 
 {% block content %}
-
+    <!-- article start -->
     <div class="container">
-        <h1 class="article-title">{{ article.title }}</h1>
-        <p class="article-pub-date">
-            <small class="text-muted" style="color:gray;">Views:{{ article.total_views }}</small>
-            <small>{{ article.pub_date }}</small>
-        </p>
-        <p class="article-pub-date">
-            {% if user.is_authenticated %}
-                <a href="#" onclick="confirm_safe_delete()">·<small>删除文章</small></a>
-                <a href="{% url "blog:article_update" article_id=article.id %}">·<small>编辑文章</small></a>
-            {% else %}
-
-            {% endif %}
-        </p>
-
-        <div class="columns is-centered">
-        <img src="{% static 'blog/images/test.jpg' %}">
-            <div class="column is-6">
-                <div class="content is-four-fifths-desktop is-full-mobile is-large has-text-warning">
-                    {{ article.content|safe }}
+        <section class="articles columns">
+            <!-- set table of content -->
+            <div class="column is-one-fifth is-hidden-mobile">
+                <div class="box toc is-radiusless">
+                    <h6 class="title has-text-centered"><strong>目录</strong></h6>
+                    <hr>
+                    <div>
+                        {{ toc|safe }}
+                    </div>
                 </div>
             </div>
-        </div>
+            <!-- end table of content -->
 
+            <!-- set article detail -->
+            <div class="column is-three-fifths">
+                <div class="card article">
+                    <div class="card-content">
+
+                        <div class="media">
+                            <div class="media-center">
+                                <img src="http://ww1.sinaimg.cn/large/005TiZVqgy1ga10vex8ugj303w03wmx4.jpg"
+                                     class="author-image" alt="Placeholder image">
+                            </div>
+
+                            <div class="media-content has-text-centered">
+                                <p class="title article-title">{{ article.title }}</p>
+
+                                <!-- set tags -->
+                                <div class="tags level-item">
+                                    {% for tag in article.tags.all %}
+                                        <span class="tag">{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
+                                    <!-- end set tags -->
+
+                                    <div class="tags has-addons level-item">
+                                    <span class="tag is-rounded is-info">
+                                        <i class="fa fa-eye"></i>
+                                        {{ article.total_views }}
+                                    </span>
+                                        <span class="tag is-rounded">{{ article.pub_date }}</span>
+                                        {% if user.is_authenticated %}
+                                            <a class="tag is-rounded is-small is-danger" href="#"
+                                               onclick="confirm_safe_delete()">·<small>删除文章</small></a>
+                                            <a class="tag is-small is-info"
+                                               href="{% url "blog:article_update" article_id=article.id %}">·<small>编辑文章</small></a>
+                                        {% else %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content article-body">
+                                {{ article.content|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end set article detail -->
+
+        </section>
+        <!-- article end -->
+        <!-- csrf hidden form -->
         <form style="display:none;"
               id="safe_delete"
               action="{% url 'blog:article_delete' article_id=article.id %}"
@@ -43,24 +78,24 @@
             {% csrf_token %}
             <button type="submit">Delete</button>
         </form>
-    </div>
+        <!-- csrf hidden form end -->
 
-    <script>
-        // 删除文章的函数
-        function confirm_safe_delete() {
-            // 调用layer弹窗组件
-            layer.open({
-                // 弹窗标题
-                title: "Confirm delete",
-                // 正文
-                content: "Confirm to delete this article？",
-                // 点击确定按钮后调用的回调函数
-                yes: function (index, layero) {
-                    // 指定应当前往的 url
-                    $('form#safe_delete button').click();
-                    layer.close(index)
-                },
-            })
-        }
-    </script>
+        <script>
+            // 删除文章的函数
+            function confirm_safe_delete() {
+                // 调用layer弹窗组件
+                layer.open({
+                    // 弹窗标题
+                    title: "Confirm delete",
+                    // 正文
+                    content: "Confirm to delete this article？",
+                    // 点击确定按钮后调用的回调函数
+                    yes: function (index, layero) {
+                        // 指定应当前往的 url
+                        $('form#safe_delete button').click();
+                        layer.close(index)
+                    },
+                })
+            }
+        </script>
 {% endblock %}
