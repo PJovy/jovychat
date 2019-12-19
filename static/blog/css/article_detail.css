@@ -16,7 +16,7 @@ html, body {
 .hero-body {
     /*background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Plum_trees_Kitano_Tenmangu.jpg/1200px-Plum_trees_Kitano_Tenmangu.jpg);*/
     /*background-image: url(https://ws1.sinaimg.cn/large/005TiZVqgy1ga1z8sxhc1j34c02w0u0z.jpg);*/
-    background-image: url(https://ws1.sinaimg.cn/mw690/005TiZVqgy1ga1zgy3hc3j33ao2747wh.jpg);
+    background-image: url(../images/black-hero-backgroud.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

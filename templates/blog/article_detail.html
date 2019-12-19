@@ -25,7 +25,7 @@
 
                         <div class="media">
                             <div class="media-center">
-                                <img src="http://ww1.sinaimg.cn/large/005TiZVqgy1ga10vex8ugj303w03wmx4.jpg"
+                                <img src="{% static 'blog/images/test.jpg' %}"
                                      class="author-image" alt="Placeholder image">
                             </div>
 
@@ -35,7 +35,7 @@
                                 <!-- set tags -->
                                 <div class="tags level-item has-addons-centered">
                                     {% for tag in article.tags.all %}
-                                        <span class="tag is-small has-text-white-bis is-link">{{ tag }}</span>
+                                        <span class="tag is-small has-text-white-bis is-link">#{{ tag }}</span>
                                     {% endfor %}
                                 </div>
                                     <!-- end set tags -->
