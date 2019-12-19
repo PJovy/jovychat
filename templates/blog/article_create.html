@@ -1,54 +1,136 @@
 {% extends 'blog/base.html' %}
+
+{#    <form method="post" action="" enctype="multipart/form-data">#}
+{#        <!-- Django中需要POST数据的地方都必须有csrf_token -->#}
+{#        {% csrf_token %}#}
+{#        <!-- 文章标题图 -->#}
+{#        <div class="form-group">#}
+{#            <!-- 标签 -->#}
+{#            <label for="avatar">文章标题图片</label>#}
+{#            <!-- 文本框 -->#}
+{#            <input type="file" class="form-control-file" id="avatar" name="avatar">#}
+{#        </div>#}
+{##}
+{##}
+{#        <!-- 文章标题 -->#}
+{#        <div class="form-group">#}
+{#            <!-- 标签 -->#}
+{#            <label for="title">文章标题</label>#}
+{#            <!-- 文本框 -->#}
+{#            <input type="text" class="form-control" id="title" name="title">#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            <label for="section">栏目</label>#}
+{#            <!-- 文本区域 -->#}
+{#            <select class="form-control" id="section" name="section">#}
+{#                <option value="none">#}
+{#                    请选择栏目#}
+{#                </option>#}
+{#                {% for section in sections %}#}
+{#                    <option value="{{ section.id }}">#}
+{#                        {{ section }}#}
+{#                    </option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{#        </div>#}
+{#        <!-- 标签 -->#}
+{#        <div class="form-group">#}
+{#            <label for="tags">标签</label>#}
+{#            <input type="text"#}
+{#                   class="form-control col-3"#}
+{#                   id="tags"#}
+{#                   name="tags">#}
+{#        </div>#}
+{##}
+{#        <!-- 文章正文 -->#}
+{#        <div class="form-group">#}
+{#            <label for="content">文章正文</label>#}
+{#            <!-- 文本区域 -->#}
+{#            <textarea type="text" class="form-control" id="body" name="content" rows="8"></textarea>#}
+{#        </div>#}
+{#        <!-- 提交按钮 -->#}
+{#        <button type="submit" class="btn btn-primary">完成</button>#}
+{#    </form>#}
 {% block content %}
-    <form method="post" action="" enctype="multipart/form-data">
-        <!-- Django中需要POST数据的地方都必须有csrf_token -->
-        {% csrf_token %}
-        <!-- 文章标题图 -->
-        <div class="form-group">
-            <!-- 标签 -->
-            <label for="avatar">文章标题图片</label>
-            <!-- 文本框 -->
-            <input type="file" class="form-control-file" id="avatar" name="avatar">
-        </div>
+    <div class="columns is-centered">
+        <div class="column is-three-fifths-desktop is-full-touch">
+            <div class="box is-transparent">
+                <p class="title">新增文章</p>
+
+                <div class="field">
+                    <div class="file has-name">
+                        <div class="control is-medium">
+                            <label class="file-label">
+                                <input class="file-input" type="file" name="avatar">
+                                <span class="file-cta">
+                                  <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                  </span>
+                                  <span class="file-label">
+                                    选择图片..
+                                  </span>
+                                </span>
+                                <span class="file-name">图片名</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+                                    <br>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet
+                                    massa fringilla egestas. Nullam condimentum luctus turpis.
+                                </p>
+                            </div>
+                            <nav class="level is-mobile">
+                                <div class="level-left">
+                                    <a class="level-item" aria-label="reply">
+            <span class="icon is-small">
+              <i class="fas fa-reply" aria-hidden="true"></i>
+            </span>
+                                    </a>
+                                    <a class="level-item" aria-label="retweet">
+            <span class="icon is-small">
+              <i class="fas fa-retweet" aria-hidden="true"></i>
+            </span>
+                                    </a>
+                                    <a class="level-item" aria-label="like">
+            <span class="icon is-small">
+              <i class="fas fa-heart" aria-hidden="true"></i>
+            </span>
+                                    </a>
+                                </div>
+                            </nav>
+                        </div>
+                    </article>
+                </div>
 
 
-        <!-- 文章标题 -->
-        <div class="form-group">
-            <!-- 标签 -->
-            <label for="title">文章标题</label>
-            <!-- 文本框 -->
-            <input type="text" class="form-control" id="title" name="title">
-        </div>
-        <div class="form-group">
-            <label for="section">栏目</label>
-            <!-- 文本区域 -->
-            <select class="form-control" id="section" name="section">
-                <option value="none">
-                    请选择栏目
-                </option>
-                {% for section in sections %}
-                    <option value="{{ section.id }}">
-                        {{ section }}
-                    </option>
-                {% endfor %}
-            </select>
-        </div>
-        <!-- 标签 -->
-        <div class="form-group">
-            <label for="tags">标签</label>
-            <input type="text"
-                   class="form-control col-3"
-                   id="tags"
-                   name="tags">
-        </div>
+                <div class="field">
+                    <label for="tags">标签:</label>
+                    <input type="text"
+                           class="control col-3"
+                           id="tags"
+                           name="tags">
+                </div>
 
-        <!-- 文章正文 -->
-        <div class="form-group">
-            <label for="content">文章正文</label>
-            <!-- 文本区域 -->
-            <textarea type="text" class="form-control" id="body" name="content" rows="8"></textarea>
+                <div class="field">
+                    <div class="control is-medium is-info is-loading">
+                        <textarea name="content" class="textarea" placeholder="Input markdown here"
+                                  rows="15"></textarea>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- 提交按钮 -->
-        <button type="submit" class="btn btn-primary">完成</button>
-    </form>
+    </div>
 {% endblock %}

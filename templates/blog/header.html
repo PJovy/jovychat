@@ -1,0 +1,90 @@
+<header>
+
+    <section class="hero is-primary is-medium">
+        <!-- hero head -->
+        <div class="hero-head is-size-5">
+            <nav class="navbar is-transparent">
+                <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="{% url 'blog:home' %}">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <a class="navbar-burger burger" data-target="navbarPrimary" role="button"
+                       aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+
+
+                <div id="navbarPrimary" class="navbar-menu">
+                    <!-- left side -->
+                    <div class="navbar-end">
+                        <a class="navbar-item" href="{% url 'blog:home' %}">
+                            主页
+                        </a>
+                        <a class="navbar-item" href="{% url 'blog:articles' %}">
+                            文章
+                        </a>
+                        <a class="navbar-item" href="{% url 'blog:about' %}">
+                            关于
+                        </a>
+                    </div>
+
+                    <!-- right side -->
+{#                    <div class="navbar-end">#}
+{#                        <div class="navbar-item">#}
+{#                            <div class="field is-grouped">#}
+{#                                <p class="control">#}
+{#                                    <a class="button is-small is-light is-rounded"#}
+{#                                       href="{% url 'userprofile:login' %}">#}
+{#                                        <span class="icon"><i class="fa fa-user"></i></span>#}
+{#                                        <span>登录</span>#}
+{#                                    </a>#}
+{#                                </p>#}
+{#                                <p class="control">#}
+{#                                    <a class="button is-small is-light is-rounded"#}
+{#                                       href="{% url 'userprofile:register' %}">#}
+{#                                        <span class="icon"><i class="fa fa-registered"></i></span>#}
+{#                                        <span>注册</span>#}
+{##}
+{#                                    </a>#}
+{#                                </p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+                </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- hero body -->
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title is-size-3">
+                    JovyChat
+                </h1>
+                <h2 class="subtitle">
+                    Jovy 的驻留地
+                </h2>
+            </div>
+        </div>
+
+        <!-- hero footer -->
+        <div class="hero-foot">
+            <nav class="tabs is-centered">
+                <div class="container">
+                    <ul>
+                        <li class="is-active"><a>概览</a></li>
+                        <li><a>介绍</a></li>
+                        <li><a>技能树</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+    </section>
+
+</header>
+

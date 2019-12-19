@@ -1,20 +1,30 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-  <div class="container">
-  <h1>This is Home Page</h1>
-  </div>
-  <div class="container">
-  {% for article in articles %}
-  <div class="row no-gutters">
-    <div class="col-12 col-sm-6 col-md-8">
-        <ul>
-            <span><li><a href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}</a></li></span>
-        </ul>
+    <section class="section is-medium">
+        <div class="container">
+            <h1 class="title has-text-centered">Section1</h1>
+            <h2 class="subtitle has-text-centered">
+                A simple container to divide your page into <strong>sections</strong>, like the one you're currently
+                reading
+            </h2>
+        </div>
+    </section>
 
+    <section class="section is-large">
+    <div class="container">
+      <h1 class="title has-text-centered">Section2</h1>
+      <h2 class="subtitle has-text-centered">
+        A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading
+      </h2>
     </div>
+  </section>
 
-  </div>
-  {% endfor %}
-  </div>
-
+    <section class="section is-large">
+    <div class="container">
+      <h1 class="title has-text-centered">Section3</h1>
+      <h2 class="subtitle has-text-centered">
+        A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading
+      </h2>
+    </div>
+  </section>
 {% endblock %}

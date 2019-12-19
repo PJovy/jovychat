@@ -1,18 +1,17 @@
 {% extends 'blog/base.html' %}
-
-{% block table %}
-    <div class="content-section">
-        <h6><strong>Table of Contents</strong></h6>
-        <hr>
-        <div>
-            {{ toc|safe }}
-        </div>
-    </div>
-{% endblock %}
+{% load static %}
+{#{% block table %}#}
+{#    <div class="content-section">#}
+{#        <h6><strong>Table of Contents</strong></h6>#}
+{#        <hr>#}
+{#        <div>#}
+{#            {{ toc|safe }}#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
 
 {% block content %}
-    <div class="container-fluid">
-    </div>
+
     <div class="container">
         <h1 class="article-title">{{ article.title }}</h1>
         <p class="article-pub-date">
@@ -21,13 +20,22 @@
         </p>
         <p class="article-pub-date">
             {% if user.is_authenticated %}
-            <a href="#" onclick="confirm_safe_delete()">·<small>删除文章</small></a>
-            <a href="{% url "blog:article_update" article_id=article.id %}">·<small>编辑文章</small></a>
+                <a href="#" onclick="confirm_safe_delete()">·<small>删除文章</small></a>
+                <a href="{% url "blog:article_update" article_id=article.id %}">·<small>编辑文章</small></a>
             {% else %}
 
             {% endif %}
         </p>
-        <p>{{ article.content|safe }}</p>
+
+        <div class="columns is-centered">
+        <img src="{% static 'blog/images/test.jpg' %}">
+            <div class="column is-6">
+                <div class="content is-four-fifths-desktop is-full-mobile is-large has-text-warning">
+                    {{ article.content|safe }}
+                </div>
+            </div>
+        </div>
+
         <form style="display:none;"
               id="safe_delete"
               action="{% url 'blog:article_delete' article_id=article.id %}"

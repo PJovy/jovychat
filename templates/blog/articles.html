@@ -1,112 +1,44 @@
 {% extends 'blog/base.html' %}
 
-
-
 {% block content %}
-    <div class="container">
-        <!-- add breadcrumb navibar -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'blog:articles' %}?order=total_views&search={{ search }}">Hotest</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'blog:articles' %}?search={{ search }}">Newest</a>
-                </li>
-            </ol>
-        </nav>
-        <!-- add search bar -->
-        <div class="col-auto pl-0 mr-auto">
-            <form class="form-inline">
-                <label class="sr-only">
-                    Content:
-                </label>
-                <input type="text" class="form-control mb-2 mr-sm-2" name="search" placeholder="search posts..."
-                       required>
-            </form>
-        </div>
+    <div class="columns is-centered">
+        <!-- articles -->
+        <div class="column is-four-fifths-desktop is-centered">
+            <div class="tile is-ancestor is-6">
+                <div class="tile is-vertical">
+                    {% for article in articles %}
+                        <div class="tile">
+                            <div class="box">
+                                <article class="media">
+                                    <div class="media-left">
+                                        <figure class="image is-64x64">
+                                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                                        </figure>
+                                    </div>
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p class="title">{{ article.title }}</p>
 
-        <!-- add pagination -->
-        <div class="container">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    {% if articles.has_previous %}
-                        <li class="page-item"><a href="?page=1&order={{ order }}&search={{ search }}&tag={{ tag }}"
-                                                 class="btn btn-secondary btn-sm">
-                            &laquo;
-                        </a>
-                        </li>
-                        <span>...</span>
-                        <li class="page-item"><a class="page-link"
-                                                 href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}&tag={{ tag }}"> {{ articles.previous_page_number }} </a>
-                        </li>
-                    {% endif %}
-                    <li class="page-item disabled"><a class="page-link"
-                                                      href="?page{{ articles.number }}&order={{ order }}&search={{ search }}&tag={{ tag }}">{{ articles.number }}</a>
-                    </li>
-                    {% if articles.has_next %}
-                        <li class="page-item"><a class="page-link"
-                                                 href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}&tag={{ tag }}"> {{ articles.next_page_number }} </a>
-                        </li>
-                        <span>...</span>
-                        <li class="page-item"><a class="btn btn-secondary btn-sm"
-                                                 href="?page={{ articles.paginator.num_pages }}&order={{ order }}&search={{ search }}&tag={{ tag }}">
-                            &raquo; </a></li>
-                    {% endif %}
-                </ul>
-            </nav>
+                                        </div>
+                                    </div>
+                                </article>
 
-        </div>
-    </div>
+                            </div>
 
-    <!-- add hint for search results -->
-    {% if search %}
-        {% if articles %}
-            <h4>Results about <span style="color:red">{{ search }}</span> are here:</h4>
-            <hr>
-        {% else %}
-            <h4>No results about <span style="color:red">{{ search }}</span> now</h4>
-            <hr>
-        {% endif %}
-    {% endif %}
-
-    <hr>
-    <!-- article list -->
-    <div class="tile is-ancestor is-vertical">
-        {% for article in articles %}
-            <div class="tile is-9 is-parent">
-                <div class="tile is-child box">
-                    <p class="has-text-centered">
-                        <a class="title is-info"
-                           href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}
-                        </a>
-                        <a class="button is-rounded is-primary is-bordered is-light"
-                           href="{% url 'blog:articles' %}?section={{ article.section.id }}">{{ article.section }}</a>
-                        <!-- tags here -->
-                        {% for tag in article.tags.all %}
-                            <a class="tag is-rounded is-bordered is-light is-small"
-                               href="{% url 'blog:articles' %}?tag={{ tag }}">{{ tag }}</a>
-                        {% endfor %}
-                    </p>
-                    <br>
-                    <p class="has-text-grey has-text-right is-small is">
-                        <span>发布时间: {{ article.pub_date }}</span>
-                        <span class="has-text-link">阅读量: {{ article.total_views }}</span>
-                    </p>
-                    <!-- 标题图位置 -->
-                    {% if article.avatar %}
-                        <figure class="image">
-                            <img src="{{ article.avatar.url }}" alt="avatar"
-                                 >
-                        </figure>
                         </div>
-                    {% endif %}
+                    {% endfor %}
+                </div>
             </div>
-        {% endfor %}
-        <hr>
+        </div>
     </div>
+
+
+
+
+
+    <!-- js:when move over these tiles,do pulse animation -->
     <script>
-        var tiles = document.getElementsByClassName("is-parent");
+        var tiles = document.getElementsByClassName("is-child");
         for (var i = 0; i < tiles.length; i++) {
             tiles[i].addEventListener('mouseover', function () {
                 this.className += " animated pulse";
@@ -115,7 +47,6 @@
                 this.className = this.className.replace(" animated pulse", "");
             });
         }
-
     </script>
 
 
