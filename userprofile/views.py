@@ -32,11 +32,13 @@ def user_login(request):
         return HttpResponse('Please use GET or POST to request.')
 
 
+@login_required(login_url='userprofile:login')
 def user_logout(request):
     logout(request)
     return redirect('blog:articles')
 
 
+@login_required(login_url='userprofile:login')
 def user_register(request):
     if request.method == 'POST':
         user_register_form = UserRegisterForm(data=request.POST)
