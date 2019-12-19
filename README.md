@@ -3,20 +3,19 @@
 This is a personal simple blog web app by Django.
 
 ## Features
-- Responsive layout which was built on Bootstrap
+- Responsive layout which was built on Bulma CSS.
 - Search/Create/Update/Delete Articles
-- User login/logout/Register/Delete
-- Markdown translate(not perfect now)
-- User password reset feature by import 3rd-party module 'django-password-reset'
-- Simple counting views of article
-- Order articles by Hotest(most views) or Newest(recently published)
-- Simple search articles by input key word(title, content, section)
+- User login/logout/Register/Delete & password reset by email.
+- Translate Markdown to HTML.
+- Simple counting views of article.
+- Order articles by Hotest(most views) / Newest(recently published) / Tags / Article sections
+- Simple search articles by input key word(title, content, section, tags)
 - Auto generate table of Contents by markdown module(TOC)
-- Search by tag name or article section.
+
 
 
 ## TO DO
-- [ ] Comments
+- [x] Comments
 - [x] Tags
 - [ ] Rich text editor
-- [ ] Rebuild styles by Bulma.css
+- [x] Rebuild styles by Bulma.css
