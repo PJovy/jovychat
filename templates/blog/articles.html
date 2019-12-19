@@ -1,7 +1,6 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-
     <!-- breadcrumb order -->
     <div class="container box">
         <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
@@ -22,6 +21,46 @@
         </nav>
     </div>
     <!-- end breadbrumb order -->
+
+<!-- test -->
+    <div class="box">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+        <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+      </figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+          <br>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+        </p>
+      </div>
+      <nav class="level is-mobile">
+        <div class="level-left">
+          <a class="level-item" aria-label="reply">
+            <span class="icon is-small">
+              <i class="fas fa-reply" aria-hidden="true"></i>
+            </span>
+          </a>
+          <a class="level-item" aria-label="retweet">
+            <span class="icon is-small">
+              <i class="fas fa-retweet" aria-hidden="true"></i>
+            </span>
+          </a>
+          <a class="level-item" aria-label="like">
+            <span class="icon is-small">
+              <i class="fas fa-heart" aria-hidden="true"></i>
+            </span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </article>
+</div>
+    <!-- end test -->
 
 
     <div class="columns ">
@@ -61,32 +100,51 @@
                 {% for article in articles %}
                     <div class="tile is-parent is-vertical">
                         <div class="tile is-child box is-radiusless">
-                            <p class="has-text-centered">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-128x128 is-rounded">
+                                    <img src="{{ article.avatar.url }}" alt="文章标题图">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="has-text-centered">
                                 <a class="title has-text-weight-bold"
                                    href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}
                                 </a>
-                                <a class="button is-warning is-radiusless"
-                                   href="{% url 'blog:articles' %}?section={{ article.section.id }}">
-                                    {{ article.section }}</a>
-                                <br>
-                                <br>
-                                <!-- tags here -->
-                            <div class="tags level-item has-addons-centered">
-                                {% for tag in article.tags.all %}
-                                    <a href="{% url 'blog:articles' %}?tag={{ tag }}"
-                                       class="tag is-small has-text-white-bis is-link">#{{ tag }}</a>
-                                {% endfor %}
-                            </div>
-                            <!-- end tags -->
-                            </p>
-                            <br>
-                            <p class="has-text-grey has-text-right is-small">
-                                <span>发布时间: {{ article.pub_date }}</span>
-                                <span class="has-text-link"><i
-                                        class="fa fa-eye has-text-info"></i> :{{ article.total_views }}</span>
-                            </p>
-                        </div>
+                                    <a class="button is-warning is-radiusless"
+                                       href="{% url 'blog:articles' %}?section={{ article.section.id }}">
+                                        {{ article.section }}
+                                    </a>
+                                    <br>
+                                {% if article.brief %}
+                                    <p class="has-text-weight-bold">{{ article.brief }}</p>
+                                {% else %}
+                                {% endif %}
+                                    <!-- tags here -->
+                                <div class="tags level-item has-addons-centered">
+                                    {% for tag in article.tags.all %}
+                                        <a href="{% url 'blog:articles' %}?tag={{ tag }}"
+                                           class="tag is-small has-text-white-bis is-link">#{{ tag }}</a>
+                                    {% endfor %}
 
+                                </div>
+                                <!-- end tags -->
+                                </p>
+
+
+
+
+
+                                <br>
+                                <p class="has-text-grey has-text-right is-small">
+                                    <span>发布时间: {{ article.pub_date }}</span>
+                                    <span class="has-text-link">
+                                        <i class="fa fa-eye has-text-info"></i> :{{ article.total_views }}
+                                    </span>
+                                </p>
+                            </div>
+                        </article>
+                        </div>
                     </div>
                 {% endfor %}
                 <!-- end article list -->
@@ -120,4 +178,5 @@
         </div>
     </div>
     <!-- end pagination -->
+
 {% endblock %}

@@ -18,6 +18,7 @@ class Article(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     total_views = models.PositiveIntegerField(default=0)
+    brief = models.TextField(blank=True)
     tags = TaggableManager(blank=True)
     avatar = models.ImageField(upload_to='article/%Y/%m%d/', blank=True)
     section = models.ForeignKey(
@@ -41,7 +42,7 @@ class Article(models.Model):
         if self.avatar and not kwargs.get('update_fields'):
             image = Image.open(self.avatar)
             (x, y) = image.size
-            new_x = 400
+            new_x = 256
             new_y = int(new_x * (y / x))
             resized_image = image.resize((new_x, new_y), Image.ANTIALIAS)
             resized_image.save(self.avatar.path)
