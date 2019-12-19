@@ -1,10 +1,6 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 
-{% block css %}
-    {{ block.super }}
-    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
-{% endblock %}
 
 {% block content %}
     <!-- article start -->
@@ -23,7 +19,7 @@
             <!-- end table of content -->
 
             <!-- set article detail -->
-            <div class="column is-three-fifths">
+            <div class="column is-three-fifths-desktop is-full-touch">
                 <div class="card article">
                     <div class="card-content">
 
@@ -37,16 +33,16 @@
                                 <p class="title article-title">{{ article.title }}</p>
 
                                 <!-- set tags -->
-                                <div class="tags level-item">
+                                <div class="tags level-item has-addons-centered">
                                     {% for tag in article.tags.all %}
-                                        <span class="tag">{{ tag }}</span>
+                                        <span class="tag is-small has-text-white-bis is-link">{{ tag }}</span>
                                     {% endfor %}
                                 </div>
                                     <!-- end set tags -->
 
                                     <div class="tags has-addons level-item">
-                                    <span class="tag is-rounded is-info">
-                                        <i class="fa fa-eye"></i>
+                                    <span class="tag is-rounded is-warning has-text-weight-bold">
+                                        <i class="fa fa-eye"></i>&nbsp;
                                         {{ article.total_views }}
                                     </span>
                                         <span class="tag is-rounded">{{ article.pub_date }}</span>
@@ -79,7 +75,7 @@
             <button type="submit">Delete</button>
         </form>
         <!-- csrf hidden form end -->
-
+    </div>
         <script>
             // 删除文章的函数
             function confirm_safe_delete() {

@@ -55,82 +55,67 @@
     <div class="columns is-centered">
         <div class="column is-three-fifths-desktop is-full-touch">
             <div class="box is-transparent">
-                <p class="title">新增文章</p>
+                <form method="POST" action="." enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="label" for="tags">标题:</label>
+                        <input type="text" class="control input col-3" id="title" name="title">
+                    </div>
 
-                <div class="field">
-                    <div class="file has-name">
-                        <div class="control is-medium">
+                    <div class="field">
+                        <label class="label" for="tags">标签:</label>
+                        <input type="text" class="control input col-3" id="tags" name="tags">
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <label class="label">选择文章分类:</label>
+                            <div class="select">
+                                <select name="section" id="section">
+                                    {% for section in sections %}
+                                        <option value="{{ section.id }}">{{ section }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div id="file-js" class="file has-name">
                             <label class="file-label">
                                 <input class="file-input" type="file" name="avatar">
                                 <span class="file-cta">
-                                  <span class="file-icon">
-                                    <i class="fas fa-upload"></i>
-                                  </span>
-                                  <span class="file-label">
-                                    选择图片..
-                                  </span>
+                                <span class="file-icon"><i class="fas fa-upload"></i></span>
+                                <span class="file-label">请选择图片文件上传</span>
                                 </span>
-                                <span class="file-name">图片名</span>
+                                <span class="file-name">No file uploaded</span>
                             </label>
                         </div>
                     </div>
-                </div>
 
-                <div class="box">
-                    <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-64x64">
-                                <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
-                            </figure>
+                    <div class="field">
+                        <div class="control is-medium is-info is-loading">
+                            <label class="label" for="content">正文内容(Markdown格式)</label>
+                            <textarea name="content" id="content" class="textarea" placeholder="Input markdown here"
+                                      rows="15"></textarea>
                         </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
-                                    <br>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet
-                                    massa fringilla egestas. Nullam condimentum luctus turpis.
-                                </p>
-                            </div>
-                            <nav class="level is-mobile">
-                                <div class="level-left">
-                                    <a class="level-item" aria-label="reply">
-            <span class="icon is-small">
-              <i class="fas fa-reply" aria-hidden="true"></i>
-            </span>
-                                    </a>
-                                    <a class="level-item" aria-label="retweet">
-            <span class="icon is-small">
-              <i class="fas fa-retweet" aria-hidden="true"></i>
-            </span>
-                                    </a>
-                                    <a class="level-item" aria-label="like">
-            <span class="icon is-small">
-              <i class="fas fa-heart" aria-hidden="true"></i>
-            </span>
-                                    </a>
-                                </div>
-                            </nav>
-                        </div>
-                    </article>
-                </div>
-
-
-                <div class="field">
-                    <label for="tags">标签:</label>
-                    <input type="text"
-                           class="control col-3"
-                           id="tags"
-                           name="tags">
-                </div>
-
-                <div class="field">
-                    <div class="control is-medium is-info is-loading">
-                        <textarea name="content" class="textarea" placeholder="Input markdown here"
-                                  rows="15"></textarea>
                     </div>
-                </div>
+                    <div class="field has-text-centered">
+                        <button class="button is-success is-large" type="submit">提交</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
+    <script>
+        const fileInput = document.querySelector('#file-js input[type=file]');
+        fileInput.onchange = () => {
+            if (fileInput.files.length > 0) {
+                const fileName = document.querySelector('#file-js .file-name');
+                fileName.textContent = fileInput.files[0].name;
+            }
+        }
+
+    </script>
 {% endblock %}

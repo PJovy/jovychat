@@ -1,48 +1,123 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <div class="columns is-centered">
-        <div class="column is-three-fifths">
+
+    <!-- breadcrumb order -->
+    <div class="container box">
+        <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+            <ul>
+                <li class="is-size-5">
+                    <a href="{% url 'blog:articles' %}?search={{ search }}">
+                        <span class="icon is-small"><i class="fa fa-star has-text-primary"></i></span>
+                        <p> 最新</p>
+                    </a>
+                </li>
+                <li class="is-size-5">
+                    <a href="{% url 'blog:articles' %}?order=total_views&search={{ search }}">
+                        <span class="icon is-small"><i class="fa fa-fire has-text-danger"></i></span>
+                        <p> 最热</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!-- end breadbrumb order -->
+
+
+    <div class="columns ">
+        <!-- search bar -->
+        <div class="column is-one-fifth is-hidden-mobile">
+            <div class="container">
+                <div class="box has-background-bold is-radiusless">
+                    <form method="get">
+                        {% csrf_token %}
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="text" placeholder="搜索关键词查找文章">
+                                <span class="icon is-small is-left"><i class="fas fa-search"></i></span>
+                            </p>
+                        </div>
+                    </form>
+                    <div class="content">
+                        <br>
+                        <p class="subtitle has-text-info">尝试搜索:</p>
+                        <div class="buttons">
+                            {% for article in articles %}
+                                {% for tag in article.tags.all %}
+                                    <button class="button is-bold">{{ tag }}</button>
+                                {% endfor %}
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end search bar -->
+
+        <div class="column is-three-fifths ">
             <div class="tile is-ancestor is-vertical">
+                <!-- article list -->
                 {% for article in articles %}
-                    <div class="tile is-9 is-parent is-vertical">
-                        <div class="tile is-child box">
+                    <div class="tile is-parent is-vertical">
+                        <div class="tile is-child box is-radiusless">
                             <p class="has-text-centered">
-                                <a class="title is-info"
+                                <a class="title has-text-weight-bold"
                                    href="{% url 'blog:article_detail' article_id=article.id %}">{{ article.title }}
                                 </a>
-                                <a class="button is-rounded is-primary is-bordered is-light"
-                                   href="{% url 'blog:articles' %}?section={{ article.section.id }}">{{ article.section }}</a>
+                                <a class="button is-warning is-radiusless"
+                                   href="{% url 'blog:articles' %}?section={{ article.section.id }}">
+                                    {{ article.section }}</a>
+                                <br>
+                                <br>
                                 <!-- tags here -->
+                            <div class="tags level-item has-addons-centered">
                                 {% for tag in article.tags.all %}
-                                    <a class="tag is-rounded is-link is-small"
-                                       href="{% url 'blog:articles' %}?tag={{ tag }}">{{ tag }}</a>
+                                    <a href="{% url 'blog:articles' %}?tag={{ tag }}"
+                                       class="tag is-small has-text-white-bis is-link">#{{ tag }}</a>
                                 {% endfor %}
+                            </div>
+                            <!-- end tags -->
                             </p>
                             <br>
-                            <p class="has-text-grey has-text-right is-small is">
+                            <p class="has-text-grey has-text-right is-small">
                                 <span>发布时间: {{ article.pub_date }}</span>
-                                <span class="has-text-link">阅读量: {{ article.total_views }}</span>
+                                <span class="has-text-link"><i
+                                        class="fa fa-eye has-text-info"></i> :{{ article.total_views }}</span>
                             </p>
                         </div>
 
                     </div>
                 {% endfor %}
+                <!-- end article list -->
+
                 <hr>
             </div>
         </div>
     </div>
-        <!-- js:when move over these tiles,do pulse animation -->
-        <script>
-            var tiles = document.getElementsByClassName("is-child");
-            for (var i = 0; i < tiles.length; i++) {
-                tiles[i].addEventListener('mouseover', function () {
-                    this.className += " animated pulse";
-                });
-                tiles[i].addEventListener('mouseout', function () {
-                    this.className = this.className.replace(" animated pulse", "");
-                });
-            }
-        </script>
 
+    <!-- start pagination -->
+    <div class="columns is-centered">
+        <div class="column is is-two-fifths-desktop is-full-mobile">
+            <nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
+                {% if articles.has_previous %}
+                    <a href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}&tag={{ tag }}"
+                       class="pagination-previous has-background-black has-text-white-bis">上一页</a>
+                {% else %}
+                    <a class="pagination-previous has-background-black has-text-white-bis"
+                       title="这是第一页" disabled>上一页</a>
+                {% endif %}
+
+                {% if articles.has_next %}
+                    <a href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}&tag={{ tag }}"
+                       class="pagination-next has-background-black has-text-white-bis">下一页</a>
+                {% else %}
+                    <a class="pagination-next has-background-black has-text-white-bis"
+                       title="这是最后一页" disabled>后一页</a>
+                {% endif %}
+
+            </nav>
+        </div>
+    </div>
+    <!-- end pagination -->
 {% endblock %}
