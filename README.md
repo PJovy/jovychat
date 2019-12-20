@@ -12,10 +12,28 @@ This is a personal simple blog web app by Django.
 - Simple search articles by input key word(title, content, section, tags)
 - Auto generate table of Contents by markdown module(TOC)
 
+## Appearance
+
+- Home Page
+![Home](https://raw.githubusercontent.com/PJovy/pic_bed/master/img/20191220221718.png)
+
+- Article create
+![](https://raw.githubusercontent.com/PJovy/pic_bed/master/img/20191220221640.png)
+
+- Article detail page.
+![](https://raw.githubusercontent.com/PJovy/pic_bed/master/img/20191220221641.png)
+
+- User login
+ ![](https://raw.githubusercontent.com/PJovy/pic_bed/master/img/20191220221642.png)
+ 
+- Article list
+ ![](https://raw.githubusercontent.com/PJovy/pic_bed/master/img/20191220221643.png)
 
 
 ## TO DO
-- [x] Comments
+- [ ] Comments
 - [x] Tags
 - [ ] Rich text editor
 - [x] Rebuild styles by Bulma.css
+- [ ] Rebuild by class View
+- [ ] Restful api and vue.js combined
