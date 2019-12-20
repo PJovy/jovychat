@@ -46,3 +46,21 @@ fileInput.onchange = () => {
     }
 }
 
+// 删除文章的函数
+function confirm_safe_delete() {
+    // 调用layer弹窗组件
+    layer.open({
+        // 弹窗标题
+        title: "Confirm delete",
+        // 正文
+        content: "Confirm to delete this article？",
+        // 点击确定按钮后调用的回调函数
+        yes: function (index, layero) {
+            // 指定应当前往的 url
+            $('form#safe_delete button').click();
+            layer.close(index)
+        },
+    })
+}
+
+// 返回顶部的js
