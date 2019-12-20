@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Ask for ensure when delete an article js
 const tiles = document.getElementsByClassName("is-child");
-for (const i = 0; i < tiles.length; i++) {
+for (let i = 0; i < tiles.length; i++) {
     tiles[i].addEventListener('mouseover', function () {
         this.className += " animated pulse";
     });

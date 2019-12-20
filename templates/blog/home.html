@@ -1,5 +1,25 @@
 {% extends 'blog/base.html' %}
 
+{% block header %}
+    <section class="hero is-black is-fullheight">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <p class="title is-spaced is-size-1">
+                    JovyChat
+                </p>
+                <p class="subtitle">
+                    Jovy的驻留地.
+                </p>
+                <br>
+                <p class="subtitle has-text-centered">
+                    <a href="{% url 'blog:about' %}" class="button is-medium is-black is-rounded">关于我</a>
+                    <a href="{% url 'blog:articles' %}" class="button is-medium is-black is-rounded">博文</a>
+                    <a href="#" class="button is-medium is-black is-rounded">照片墙</a>
+                </p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
 
 {% block content %}
 

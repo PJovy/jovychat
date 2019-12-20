@@ -20,17 +20,17 @@
 
                     <div id="navbarPrimary" class="navbar-menu">
                         <!-- left side -->
-                        <div class="navbar-end">
-                            <a class="navbar-item" href="{% url 'blog:home' %}">
-                                主页
-                            </a>
-                            <a class="navbar-item" href="{% url 'blog:articles' %}">
-                                文章
-                            </a>
-                            <a class="navbar-item" href="{% url 'blog:about' %}">
-                                关于
-                            </a>
-                        </div>
+{#                        <div class="navbar-end">#}
+{#                            <a class="navbar-item" href="{% url 'blog:home' %}">#}
+{#                                主页#}
+{#                            </a>#}
+{#                            <a class="navbar-item" href="{% url 'blog:articles' %}">#}
+{#                                文章#}
+{#                            </a>#}
+{#                            <a class="navbar-item" href="{% url 'blog:about' %}">#}
+{#                                关于#}
+{#                            </a>#}
+{#                        </div>#}
 
                         <!-- right side -->
                         <div class="navbar-end">
@@ -84,6 +84,11 @@
                 <h2 class="subtitle has-text-white-bis">
                     Jovy 的驻留地
                 </h2>
+                <p class="subtitle has-text-centered">
+                    <a href="{% url 'blog:about' %}" class="button is-medium is-black is-rounded">关于我</a>
+                    <a href="{% url 'blog:articles' %}" class="button is-medium is-black is-rounded">博文</a>
+                    <a href="#" class="button is-medium is-black is-rounded">照片墙</a>
+                </p>
             </div>
         </div>
         <!-- end hero body -->

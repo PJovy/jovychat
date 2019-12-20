@@ -2,23 +2,34 @@
 
 {% block content %}
     <!-- breadcrumb order -->
-    <div class="container box">
+    <div class="container box is-radiusless has-background-grey-dark">
         <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
             <ul>
                 <li class="is-size-5">
                     <a href="{% url 'blog:articles' %}?search={{ search }}">
                         <span class="icon is-small"><i class="fa fa-star has-text-primary"></i></span>
-                        <p> 最新</p>
+                        <p class="has-text-white-bis"> 最新</p>
                     </a>
                 </li>
                 <li class="is-size-5">
                     <a href="{% url 'blog:articles' %}?order=total_views&search={{ search }}">
                         <span class="icon is-small"><i class="fa fa-fire has-text-danger"></i></span>
-                        <p> 最热</p>
+                        <p class="has-text-white-bis"> 最热</p>
                     </a>
                 </li>
             </ul>
         </nav>
+        <div class="is-hidden-tablet">
+        <form method="get">
+            <div class="field">
+                <p class="control has-icons-left">
+                    <input class="input" name="search" type="text" placeholder="搜索关键词查找文章">
+                    <span class="icon is-small is-left"><i class="fas fa-search"></i></span>
+                </p>
+            </div>
+        </form>
+        </div>
+
     </div>
     <!-- end breadbrumb order -->
 
@@ -28,10 +39,9 @@
             <div class="container">
                 <div class="box has-background-bold is-radiusless">
                     <form method="get">
-                        {% csrf_token %}
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="搜索关键词查找文章">
+                                <input class="input" name="search" type="text" placeholder="搜索关键词查找文章">
                                 <span class="icon is-small is-left"><i class="fas fa-search"></i></span>
                             </p>
                         </div>
@@ -63,7 +73,9 @@
                                 <div class="media-left">
 
                                     <figure class="image is-128x128">
-                                        <img class="article-avatar" src="{{ article.avatar.url }}" alt="文章标题图">
+                                        <a href="{% url 'blog:article_detail' article_id=article.id %}">
+                                            <img class="article-avatar" src="{{ article.avatar.url }}" alt="文章标题图">
+                                        </a>
                                     </figure>
 
                                     <div class="level">
@@ -96,12 +108,12 @@
                                     <nav class="level">
                                         <div class="level-left">
                                             <!-- article section -->
-{#                                            <div class="level-item">#}
-{#                                                <a class="button is-warning is-radiusless"#}
-{#                                                   href="{% url 'blog:articles' %}?section={{ article.section.id }}">#}
-{#                                                    {{ article.section }}#}
-{#                                                </a>#}
-{#                                            </div>#}
+                                            {#                                            <div class="level-item">#}
+                                            {#                                                <a class="button is-warning is-radiusless"#}
+                                            {#                                                   href="{% url 'blog:articles' %}?section={{ article.section.id }}">#}
+                                            {#                                                    {{ article.section }}#}
+                                            {#                                                </a>#}
+                                            {#                                            </div>#}
                                             <!-- end article section -->
 
                                             <!-- tags here -->

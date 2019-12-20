@@ -1,4 +1,12 @@
-.article-avatar{
+@font-face {
+    font-family: 'webfont';
+    font-display: swap;
+    src: url('//at.alicdn.com/t/webfont_4hf0lc6ul8p.eot'); /* IE9*/
+    src: url('//at.alicdn.com/t/webfont_4hf0lc6ul8p.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/webfont_4hf0lc6ul8p.woff2') format('woff2'),
+    url('//at.alicdn.com/t/webfont_4hf0lc6ul8p.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/webfont_4hf0lc6ul8p.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/webfont_4hf0lc6ul8p.svg#Alibaba-PuHuiTi-Regular') format('svg'); /* iOS 4.1- */
+}
+
+.article-avatar {
     border-radius: 20px 20px 5px 20px;
     margin-top: 2.5rem;
 }
@@ -16,3 +24,4 @@
 .toc a {
     font-size: 1.2rem;
 }
+
