@@ -108,7 +108,7 @@ class ArticleDetailView(DetailView):
         self.object.save()
         return response
 
-    def get_object(self, md=md,queryset=None):
+    def get_object(self, md=md, queryset=None):
         article = super().get_object(queryset=None)
         article.content = md.convert(article.content)
         return article

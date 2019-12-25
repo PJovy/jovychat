@@ -1,7 +1,9 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.html import strip_tags
 from taggit.managers import TaggableManager
 from PIL import Image
+import markdown
 
 
 class ArticleSection(models.Model):
@@ -16,11 +18,12 @@ class Article(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
     pub_date = models.DateTimeField(auto_now_add=True)
+    # modify_date = models.DateTimeField(auto_now=True)
     content = models.TextField()
     total_views = models.PositiveIntegerField(default=0)
     brief = models.TextField(blank=True)
     tags = TaggableManager(blank=True)
-    avatar = models.ImageField(upload_to='article/%Y/%m%d/', blank=True)
+    avatar = models.ImageField(upload_to='article/%Y/%m%d/', default='article/default.jpg')
     section = models.ForeignKey(
         ArticleSection,
         null=True,
@@ -38,7 +41,11 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         article = super(Article, self).save(*args, **kwargs)
-
+        md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+        ])
+        self.brief = strip_tags(md.convert(self.content))[:10]
         if self.avatar and not kwargs.get('update_fields'):
             image = Image.open(self.avatar)
             (x, y) = image.size

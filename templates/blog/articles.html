@@ -73,9 +73,11 @@
                                 <div class="media-left">
 
                                     <figure class="image is-128x128">
+                                        {% if article.avatar %}
                                         <a href="{% url 'blog:article_detail' pk=article.id %}">
                                             <img class="article-avatar" src="{{ article.avatar.url }}" alt="文章标题图">
                                         </a>
+                                        {% endif %}
                                     </figure>
 
                                     <div class="level">
