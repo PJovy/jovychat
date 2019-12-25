@@ -8,7 +8,9 @@ from .forms import ArticleForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-
+from django.views.generic import TemplateView, DetailView, DeleteView
+from django.utils.decorators import method_decorator
+from django.urls import reverse_lazy
 
 def home(request):
     articles = Article.objects.all()
@@ -64,12 +66,8 @@ def articles(request):
     return render(request, 'blog/articles.html', context=context)
 
 
-def about(request):
-    now = datetime.datetime.now()
-    context = {
-        'time': now,
-    }
-    return render(request, 'blog/about.html', context=context)
+class AboutView(TemplateView):
+    template_name = 'blog/about.html'
 
 
 def resume(request):
@@ -90,11 +88,10 @@ def resume(request):
         return HttpResponse(e)
 
 
-def article_detail(request, article_id):
-    article = Article.objects.get(id=article_id)
-    now = datetime.datetime.now()
-    article.total_views += 1
-    article.save(update_fields=['total_views'])
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = 'blog/article_detail.html'
+    context_object_name = 'article'
     md = markdown.Markdown(
         extensions=[
             # 包含 缩写、表格等常用扩展
@@ -104,13 +101,23 @@ def article_detail(request, article_id):
             # 目录拓展 Table of Contents
             'markdown.extensions.toc'
         ])
-    article.content = md.convert(article.content)
-    toc = md.toc
-    context = {
-        'article': article,
-        'toc': toc,
-    }
-    return render(request, 'blog/article_detail.html', context=context)
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        self.object.total_views += 1
+        self.object.save()
+        return response
+
+    def get_object(self, md=md,queryset=None):
+        article = super().get_object(queryset=None)
+        article.content = md.convert(article.content)
+        return article
+
+    def get_context_data(self, md=md, **kwargs):
+        context = super().get_context_data(**kwargs)
+        toc = md.toc
+        context['toc'] = toc
+        return context
 
 
 @login_required(login_url='userprofile:login')
@@ -164,3 +171,4 @@ def article_update(request, article_id):
             'sections': sections
         }
         return render(request, 'blog/article_update.html', context=context)
+

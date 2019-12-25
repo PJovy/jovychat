@@ -73,7 +73,7 @@
                                 <div class="media-left">
 
                                     <figure class="image is-128x128">
-                                        <a href="{% url 'blog:article_detail' article_id=article.id %}">
+                                        <a href="{% url 'blog:article_detail' pk=article.id %}">
                                             <img class="article-avatar" src="{{ article.avatar.url }}" alt="文章标题图">
                                         </a>
                                     </figure>
@@ -94,7 +94,7 @@
                                                 {{ article.section }}
                                             </a>
                                             <a class="title"
-                                               href="{% url 'blog:article_detail' article_id=article.id %}">
+                                               href="{% url 'blog:article_detail' pk=article.id %}">
                                                 {{ article.title }}
                                             </a>
                                         </p>
